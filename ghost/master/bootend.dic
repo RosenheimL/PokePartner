@@ -34,7 +34,7 @@ OnFirstBoot
 	passhour = 0
 	passmin = 0 
 	passsec = 0 // These keep track of the time.
- 	username         = "USER" //This sets a temporary name for the user. It'll be replaced when they tell the ghost their name.
+ 	username         = "Trainer" //This sets a temporary name for the user. It'll be replaced when they tell the ghost their name.
 	stroke           = 0	// Sets their being-pet state to zero.
  	teachusername    = 0	// Related to them learning your name.
 	mikireflag       = 0	// Determines behavior at certain points.
@@ -49,10 +49,8 @@ OnFirstBoot
  	{
 		//Unlike most dialogue, it should start with "\![enter,passivemode]". Passivemode basically ensures that the balloons won't disappear, the choices won't time out, the ghosts won't talk randomly, you can't bring up menus, and makes sure that this dialogue plays through to the end correctly.
 		
-		"\![enter,passivemode]\1\s[10]\0\s[0]Hello, and welcome to the Girl and Triangle Ghost Template. \w5My name is Girl, and that's Triangle over there.\w8\1\s[10]Sup. \w8\0\s[0]\n\n[half]If you downloaded this template, you are presumably interested in making a ghost. \w5This template has been designed to help you do that. \w5Please make sure to carefully read the included readme file. \w8\1\n\n[half]\s[10]Each of the .dic files you'll be editing has a lot of commentary to guide you.\w8\0\s[0]\n\n[half]In the future, you will be replacing this dialogue with the dialogue for your own ghost. \w5This is a good place to introduce your characters.\w8\1\n\n[half]\s[10]You can have your characters banter with each other and explain how the ghost works and how to access menus.\x\c\0\s[0]More details about dialogue coding will be in the walkthrough page.\w8\1\c\s[10]Now we're going to ask the user the first question about themselves, namely what pronouns they want us to use.\w8\0\s[0]\n\n[half]This will let us construct grammatically correct sentences referring to the user later.\x\w8\1\c\s[10]How should we refer to you, user?\n\n[half]/
-		\w5\_q\![*]\q[He/Him/His,choicefirsthehim]\n/
-		\![*]\q[She/Her/Hers,choicefirstsheher]\n/
-		\![*]\q[They/Them/Their,choicefirsttheythem]\e"
+		"\![enter,passivemode]\1\s[10]\0\s[0]Hello, and welcome to the Poke!Partner Program! I'm Professor Azalea, and I'm thrilled to have a new member!\nAs explained on the sign up sheet, this program is for studying the daily life and relationships between Trainers and their pokemon(WIP, come back later).\e"
+		NameInput
 		
 		//Make sure to set up poses for both characters right when you start, otherwise one will be invisible until they speak.
 		//Note also the use of the \x and \c tags.
@@ -65,41 +63,6 @@ OnFirstBoot
 		}
  	}
 }
-
-//Below are the choices that were defined at the end of the OnFirstBoot dialogue up there. These define the values your ghost will be using for pronouns according to what the user selected.
-
-Select.choicefirsthehim
-{
-	presuffix = "masculine"
-	himher = "him"
-	heshe = "he"
-	hisher = "his"
-	hesshes = "he's"
-	--
-	NameInput
-}
-
-Select.choicefirstsheher
-{
-	presuffix = "feminine"
-	himher = "her"
-	heshe = "she"
-	hisher = "her"
-	hesshes = "she's"
-	--
-	NameInput
-}
-
-Select.choicefirsttheythem
-{
-	himher = "them"
-	heshe = "they"
-	hisher = "theirs"
-	hesshes = "they're"
-	--
-	NameInput
-}
-
 
 //--NameInput
 
