@@ -1,0 +1,126 @@
+﻿//---------------------------The User's Name--------------------------
+//This .dic file has to do with setting the user's name and suffix/prefix. 
+
+
+//--OnTeachName
+//This is called from the config menu in the main character's double click menu when the user says they want to change their name. If you look in menu.dic you'll see the code leading to here.
+
+OnTeachName	
+{
+	if reference0 == "TEACHNAME" //ignore this
+		{
+		"\0\s[0]The user wants to change their name. What do you want it to be?\![open,inputbox,OnNameTeach,-1]\e"
+		}
+	else
+		{
+		}
+}
+
+
+//--OnNameTeach
+//This is where the user inputs their name and the ghost analyzes it.
+
+OnNameTeach
+{
+	tempname = reference0 //this stores the name value from reference0 in tempname
+	reference0 = TOLOWER(reference0) //changes it to lowercase
+	reference0 = REPLACE(reference0," ","") //removes spaces
+	reference0 = REPLACE(reference0,".","") //removes periods
+	reference0 = REPLACE(reference0,"-","") //removes dashes
+	
+	//Those extra TOLOWER/REPLACE things up there basically clean up the user's input so you don't have to check for Girl, GIRL, girl, GiRl, etc. It'll make it much easier to check for any specific name, since you won't have to account for any edge cases. Note that the names you will be checking for should be in all lowercase, however.
+	
+	if reference0 == "girl" //this checks to see if the user input any variation of the name "Girl".
+	{
+		"\0\s[0]That's my name.\w8\1\s[10]That might be confusing. You should try again.\![open,inputbox,OnNameTeach,-1]"
+		//Note here that it's using the same tag as above to reopen the text box to let the user put in another name.
+	}
+	elseif reference0 == "triangle" 
+	{
+		"\1\s[10]That's my name. Try putting in another one.\![open,inputbox,OnNameTeach,-1]"
+	}
+	elseif reference0 == "" //This is if the user doesn't put in a name at all, since that'd also get awkward in dialogue.
+	{
+		username = "USER" //this sets the user's name to USER.
+		
+		"\1\s[10]You didn't put in anything.\w8\0\s[0]We will call you USER.\e"
+	}
+	else //if the user put in something not specified above, ie a proper name the ghost can use. 
+	{
+		"\0\s[0]Do you want a title?\w4\n\n[half]\![*]\q[Nope,titlenone]\n"
+		--
+		if presuffix == "masculine" //this value was defined in bootend.dic and menu.dic when the user chose their pronouns. Thus, if someone chose he/him pronouns, they would be able to choose Mr. or Master.
+		{
+		"\![*]\q[Mr.,titlemr]\n/
+		\![*]\q[Master,titlemaster]\n"
+		}
+		elseif presuffix == "feminine"
+		{
+		"\![*]\q[Ms.,titlems]\n/
+		\![*]\q[Lady,titlelady]\n"
+		}
+		-- //the titles after this are gender neutral and will appear for all users.
+		"\![*]\q[-ssi,titlessi]\n/
+		\![*]\q[-san,titlesan]\e"
+	}
+}
+	
+Select.titlenone
+{
+		username = tempname
+		NameDone
+}
+
+Select.titlemr
+{
+		username = "Mr. " + tempname
+		NameDone
+}
+
+Select.titlemaster
+{
+		username = "Master " + tempname
+		NameDone
+}
+		
+Select.titlems
+{
+		username = "Ms. " + tempname
+		NameDone
+}
+
+Select.titlelady
+{
+		username = "Lady " + tempname
+		NameDone
+}
+
+Select.titlessi
+{
+		username = tempname + "-ssi"
+		NameDone
+}
+
+Select.titlesan
+{
+		username = tempname + "-san"
+		NameDone
+}
+
+//--NameDone
+//This is the final bit of dialogue your ghosts will have when the user changes their name. There is a special section here for when the user first boots the ghost.
+
+NameDone
+{
+	if firstboot == 1 //this checks for the flag that was set during the firstboot sequence
+	{
+		firstboot = 0 //this turns the flag off
+		
+		//This dialogue will display the first time the user puts in their name.
+		"\0\s[0]Thank you for inputting your name for the first time, %(username).\w8\1\s[10]Good luck on finishing your ghost!\e"
+	}
+	else
+	{
+	"\0\s[0]The user is now called %(username).\e"
+	}	
+}
