@@ -479,3 +479,13 @@ else //if reference0 isn't the main character, then it has to be the side charac
 		}
 	}
 }
+
+OnPBF //pokemon first boot
+{
+	
+}
+
+OnPBG //pokemon boot generation
+{
+	shiny chance here
+}

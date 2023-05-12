@@ -1,0 +1,29 @@
+OnPokeID
+{
+Pokemon = {"Porygon","Porygon2"}
+
+	//pokemonID menu read out
+	{
+	Pokemon[0]
+	type[0]
+	//pokedex entry
+	"\0\s[0]%(Pokemon) is the first Artificial pokemon, capable of moving between physical space and the digital space. Many think of it as the protector of the internet\e"
+	nature[0] //remember to randomize this later
+	
+	
+	
+	"Your %(Pokemon) is currently feeling %(EmotionalState)"
+	}
+}
+//remind to self, you're gonna need to make documentation after the jam to streamline the shell making process [Kyo/Negumen]
+//Remember that you moved the Pokemonfirstboot and generation code to the bootend.dic [Chandra]
+
+What you named your pokemon
+-- your pokemon's nature ^
+-- shiny toggle
+-- hunger
+-- friendship
+3. general functions
+-- sound on/off
+-- minigame data
+-- notes and nuzlocke data

@@ -1,0 +1,47 @@
+OnPokemonarrays
+{
+	//hey me, why the fuck [kyo]
+	//hey me, shut up and get it done [Chandra]
+	//needed arrays- Types, Natures, abilities (maybe) 
+	//hey how do I make pokeID generate good? [Kyo]
+	//shh we'll figure it out later [Chandra]
+	
+	types = ("Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy")
+	natures = ("Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty", "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky")
+}
+
+OnHungryArrays
+{
+	//Food system go brrr [kyo]
+	//needed arrays- Berries, Sandwitch, curry, flavors, 
+	// poffins and pokeblocks don't need arrays, they're unique. Maybe can have them be a simpler version but provide less happiness? yeah that works
+	
+	flavors {"Spicy", "Sour", "Dry", "Bitter", "Sweet"}
+	berries {"Cheri", "Chesto", "Pecha", "Rawst", "Aspear", "Leppa", "Oran", "Persim", "Lum", "Sitrus", "Figy", "Wiki", "Mago", "Aguav", "Iapapa", "Razz", "Bluk", "Nanab", "Wepear", "Pinap", "Pomeg", "Kelpsy", "Qualot", "Hondew", "Grepa", "Tamato", "Cornn", "Magost", "Rabuta", "Nomel", "Spelon", "Pamtre", "Watmel", "Durin", "Belue", "Occa", "Passho", "Wacan", "Rindo", "Yache", "Chople", "Kebia", "Shuca", "Coba", "Payapa", "Tanga", "Charti", "Kasib", "Haban", "Colbur", "Babiri", "Chilan", "Liechi", "Ganlon", "Salac", "Petaya", "Apicot", "Lansat", "Starf", "Enigma"}
+	currybase {"Sausages", "Bob's Food Tin", "Bach's Food Tin", "Tin of Beans", "Bread", "Pasta", "Mixed Mushrooms", "Smoke-Poke Tail", "Large Leek", "Fancy Apple", "Brittle Bones", "Pack of Potatoes", "Pungent Root", "Salad Mix", "Fried Food", "Boiled Egg", "Fruit Bunch", "Moomoo Cheese", "Spice Mix", "Fresh Cream", "Packaged Curry", "Coconut Milk", "Instant Noodles", "Precooked Burger"}
+	
+
+
+//(I made chat gpt do this, gotta check it's work but this is a good leaping off point. 
+//for (string berry : berries) {
+    //if (berry == "Cheri" || berry == "Rawst" || berry == "Aspear" || berry == "Pecha" || berry == "Wiki") {
+        //flavorPoints["Spicy"] += 10;
+    //}
+    //if (berry == "Chesto" || berry == "Leppa" || berry == "Oran" || berry == "Persim" || berry == "Sitrus") {
+    //    flavorPoints["Dry"] += 10;
+    //}
+    //if (berry == "Bluk" || berry == "Nanab" || berry == "Wepear" || berry == "Pinap" || berry == "Pomeg") {
+    //    flavorPoints["Sweet"] += 10;
+    //}
+    //if (berry == "Qualot" || berry == "Hondew" || berry == "Grepa" || berry == "Tamato" || berry == "Cornn") {
+    //    flavorPoints["Bitter"] += 10;
+    //}
+    //if (berry == "Razz" || berry == "Aguav" || berry == "Iapapa" || berry == "Lum" || berry == "Figy") {
+    //    flavorPoints["Sour"] += 10;
+    //}
+//}
+
+// Print the total points for each flavor
+//for (string flavor : flavors) {
+    //print("Total points for " + flavor + ": " + flavorPoints[flavor]);
+}
