@@ -488,4 +488,8 @@ OnPBF //pokemon first boot
 OnPBG //pokemon boot generation
 {
 	shiny chance here
+	
+	nature chance here
+	
+	Liked Flavor chance here
 }
