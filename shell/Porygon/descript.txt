@@ -1,4 +1,4 @@
-﻿//There's a lot more going on in the descript.txt for a shell than for your ghost in general, as you can probably tell. I'll try to break it down.
+//There's a lot more going on in the descript.txt for a shell than for your ghost in general, as you can probably tell. I'll try to break it down.
 
 
 //Free or Bound
@@ -18,10 +18,9 @@ seriko.use_self_alpha,1
 
 charset,UTF-8
 type,shell
-name,GT Default Shell
-craftman,zarla
-craftmanurl,http://www.ashido.com/ukagaka/walkthrough.html
-
+name,Porygon
+craftman,Poke!Partner Team
+craftmanurl,PokePartner Team
 
 //Balloon Co-ordinates
 //These basically define where your balloon starts for your main character (sakura) and your secondary character (kero). While you're testing your ghost, you'll notice that moving the balloons around shows you a set of coordinates on the bottom. Move your balloons where you want them, write down the coordinates, and copy them here. Otherwise, you can just leave them at 0. Your user will adjust them as they need to, so I wouldn't sweat this too much.
