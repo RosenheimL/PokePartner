@@ -4,7 +4,7 @@ Pokemon = "Azalea"
 PokeName = "Azalea" //temp nickname for pokemon. Make this the same as the Pokemon
 NatDex = 0 //Number in the natdex
 Diet = "Omnivore" //Check README.txt. if unsure, ignore it
-MyType1 = "?" //Your Pokemon's types, if it's monotype then just leave the second mytype blank
+MyType1 = "Professor" //Your Pokemon's types, if it's monotype then just leave the second mytype blank
 MyType2 = " "
 //Put your Pokemon's Dex Entry down here.
 

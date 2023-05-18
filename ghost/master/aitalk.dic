@@ -125,7 +125,7 @@ RandomTalk : nonoverlap_pool
 		{
 			"I'm Normal!"
 		}
-		when "?"
+		when "Professor"
 		{
 			"Azalea uwu"
 		}

@@ -25,9 +25,9 @@ OnInitialize
 	else; mode = 0
 }
 
-OnBoot
+OnBoot : all
 {
-	DICLOAD(currentshellpath + "/pokeID.dic")
+	"\![get,property,OnShellPath,currentghost.shelllist.current.path]"
 	OnPokeID
 	if Reference0 = "master"; mode = 1
 	else; mode = 0
@@ -44,9 +44,9 @@ OnClose
 	"\w8\w8\-" //This is what makes the ghost close (after a short pause), do not remove the \- , and MAKE SURE you don't use a \e before this point or it won't work
 }
 
-OnShellChanging
+OnShellChanging : all
 {
-	DICUNLOAD("/pokeID.dic")
+	"\![get,property,OnShellYEET,currentghost.shelllist.current.path]"
 	if reference0 == "master"
 	{
 		if mode == 1 
@@ -64,6 +64,7 @@ OnShellChanging
 		if mode == 1
 		{
 			"\0\s[1]Alrighty! Bringing %(reference0) Over now!\s[4]Hope you have fun and collect good Data~.\w8\e"
+			mode = 0
 		}
 		else
 		{
@@ -74,47 +75,17 @@ OnShellChanging
 
 
 
-OnShellChanged
+OnShellChanged : all
 {
-	 currentshellpath = reference2
-	_a = DICLOAD(currentshellpath + "/file.dic")
-	if mode == 1 
+	"\![get,property,OnShellPath,currentghost.shelllist.current.path]"
+	
+	if mode == 1
 	{
-		"\0\s[1]\1\s[10]"
+		"\0\s[1]\1\s[10] Professor Loaded!"
 	}
-	else //mode == 0; First Child
+	else 
 	{
-		"\0\s[0]\1\s[10]"
-	}
-	--
-	if reference0 == "Azalea"
-	{
-		nowshell = "master"
-		--
-		if mode == 1 //Vektoria
-		{
-			"\0\s[1]Back in our default skin.\w8\e"
-		}
-		else //mode == 0; First
-		{
-			"\0\s[0]We have been returned to our default shell.\w8\e"
-		}
-	}
-	//elseif reference0 == ""
-	//nowshell = ""
-	else //other unspecified shells
-	{
-		nowshell = "%(reference[0])"
-		//unfortunately, I have no idea how to actually account for unknown shells. the "nowshell" variable is used in aitalk for shell-specific dialogue, so perhaps leaving it blank or just with this envelope is good enough! unknown shells wouldn't have specific dialogue anyway and all.
-		--
-		if mode == 1 //Vektoria
-		{
-			"\0\s[1]Hope this %(reference[0]) shell is amusing to you.\w8\e"
-		}
-		else //mode == 0; First
-		{
-			"\0\s[0]We are now using the unknown %(reference[0]) shell.\w8\e"
-		}
+		"\0\s[0]\1\s[10] Pokemon summoned"
 	}
 }
 
@@ -127,13 +98,19 @@ OnShellChanged
 
 //property system:
 
-OnGetShell
-{
-   "\![get,property,OnShellPath,currentghost.shelllist.current.path]"
-}
-
-OnShellPath
+//OnGetShell
+//	"\![get,property,OnShellLoad,currentghost.shelllist.current.path]"
+//	"\![get,property,OnShellYEET,currentghost.shelllist.current.path]"
+	
+OnShellLoad
 {
   currentshellpath = reference0
-  _a = DICLOAD(currentshellpath + "/file.dic") 
+  _a = DICLOAD(currentshellpath + "/pokeID.dic") 
 }
+
+OnShellYEET
+{
+  currentshellpath = reference0
+  _a = DICUNLOAD(currentshellpath + "/pokeID.dic") 
+}
+
