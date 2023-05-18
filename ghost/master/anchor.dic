@@ -4,7 +4,6 @@
 
 
 //--OnTranslate
-
 //As I said above, OnTranslate filters through all the text your ghost displays and does whatever you specify to it. That doesn't have to just be turning things into links, it could be anything. This is a powerful function that can be used in a lot of creative ways I bet, but I wouldn't mess with it too much since you can pretty easily break stuff if you don't know what you're doing.
 
 OnTranslate
@@ -13,6 +12,15 @@ OnTranslate
  	_talk = REPLACE(_talk, "Anchor 1", "\_a[anchor1]Anchor 1\_a")
  	_talk = REPLACE(_talk, "Anchor 2", "\_a[anchor2]Anchor 2\_a")
  	_talk = REPLACE(_talk, "Anchor 3", "\_a[anchor3]Anchor 3\_a")
+
+	//PokePartner Specific
+    _talk = REPLACE(_talk,"ClickRules","\q[Click To Add a Rule!,OnAddEntry,1]") // Should be Nuzlocke[x][1] where x is the Nuzlocke number the User was on when they selected to add an entry.
+    _talk = REPLACE(_talk,"ClickEncounter","\q[Add Encounter!,OnAddEntry,2]")
+    _talk = REPLACE(_talk,"ClickRoute","\q[Route!,OnAddEntry,3]")
+    _talk = REPLACE(_talk,"ClickExtras","\q[Extra!,OnAddEntry,5]")
+
+    _talk = REPLACE(_talk,"Clickperish","\q[☐,OnAddEntry,4]")
+    _talk = REPLACE(_talk,"perished","\q[☑,OnAddEntry,4]")
 	
 		if reference1 == "" && reference2 == "" { //send input box : no event (ref2) , no special flag (ref1)
             EVAL('"' + REPLACE(_talk,'"','" + CHR(0x22) + "') + '"')

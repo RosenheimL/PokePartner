@@ -1,0 +1,43 @@
+OnPokeID
+{
+	//Shellmakers Please fill out this info
+Pokemon = "Porygon"
+PokeName = "Porygon" //temp nickname for pokemon. Make this the same as the Pokemon
+NatDex = 0137 //Number in the natdex
+Diet = "Strange" //Check README.txt. if unsure, ignore it
+MyType1 = "Normal" //Your Pokemon's types, if it's monotype then just least the second mytype blank
+MyType2 = " "
+//Put your Pokemon's Dex Entry down here.
+
+PokeDexEntry = "\0\s[0]Porygon is the first Artificial pokemon, capable of moving between physical space and the digital space. Many think of it as the protector of the internet\e"
+
+//Shellmakers now move on to PokeTalk
+//Below this is Random genned stuff, don't touch
+PokeVanished = 0 //Just keeps track of the shell
+FirstTime = 0 //Switch used to run the randomizing sequence
+MyNature = "null" //Randomize if null, should only save to ID gen on first rando though.
+IsShiny = 3 //Randomize. if 3 it will randomize
+MyFlavor = " " //set random secondary liked flavor
+}
+//remind to self, you're gonna need to make documentation after the jam to streamline the shell making process [Kyo/Negumen]
+//Remember that you moved the Pokemonfirstboot and generation code to the bootend.dic [Chandra]
+
+PokeTalk
+{
+//Toss any dialogue specific to this pokemon in here! note that these idles only run in the Happy and Fine Moods
+"\0\s[5]%(PokeState) seems to be analyzing something on its screen.\w4\nIt must be processing some data.\e"
+"\0\s[1]%(PokeState) looks a bit glitchy.\w4\nMaybe it needs to be debugged?\e"
+
+}
+
+//Awesome!! You're all done Shell Maker, enjoy your arting!
+
+PokeEgo
+{
+	//Storing NonConstant Values that are still pokemon specific
+	FriendVal = 0
+	EXP = 0
+	Hungr = 0
+	Health = 0
+}
+//hunger is stored in the balls [Luc+Negumen]

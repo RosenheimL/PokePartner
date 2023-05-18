@@ -18,9 +18,9 @@ seriko.use_self_alpha,1
 
 charset,UTF-8
 type,shell
-name,GT Default Shell
-craftman,zarla
-craftmanurl,http://www.ashido.com/ukagaka/walkthrough.html
+name,Azalea
+craftman,Poke!Program Team
+craftmanurl,http://PokePartner.carrd.co
 
 
 //Balloon Co-ordinates

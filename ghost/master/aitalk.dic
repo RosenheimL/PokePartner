@@ -1,474 +1,188 @@
-﻿//---------------------------AI Talk--------------------------
-//This is where all their random conversations are stored.
-
-/*
-This file has...
-
-AiTalk
-RandomTalk
-any chains you set up
-HourCheck
-OnMinuteChange
-OnSecondChange
-OffscreenTalk
-EndOffscreenTalk
-OnSurfaceRestore
-OnKeyPress
-*/
-
-
-//--AiTalk
-//Advanced users, this is mostly setting up whether or not dialogue is in a chain before it displays. Again, you can leave it alone unless you want to screw around with chains for some strange reason.
-
 OnAiTalk
- {
-	if RAND(100) < communicateratio
- 	{
- 		StartCommunicate
-	}
- 	else
+{
+	if CHAIN.IDName == ""
 	{
- 		if mikireflag == 0
-		{
-			if CHAIN.IDName == "" {
- 				lastTalk = RandomTalk
-			}
-			else {
-				lastTalk = ChainTalk
-			}
-			lastTalk
-		}
- 		else
-		{ 
-		MikireTalk
- 		}
+		LastTalk = RandomTalk
 	}
- }
-
-
-//--RandomTalk 
-//These are the conversations that they'll have with you or each other that pop up depending on the talk rate defined in menu.dic (or if you ignored that, set in bootend.dic in the first boot, which would be every five minutes).
-
-//--Rules (By Quonit)
-
-// You can change the size of text using \f[height,(number, or the word default).
- // \f[strike,true] makes the words struck out.
- // \f[strike,defualt] resets the text to defualt.
- // \f[sub,true] makes text subscript.
- // \f[sub,default] resets text to normal.
- // \f[sup,true] makes text superscript.
- // \f[sup,false] makes the text normal again.
- // \f[underline,true] underlines text.
- // \f[underline,default] removes the line from under the text.
- // \f[bold,true] makes your statement bold.
- // \f[bold,false] makes the text not so bold.
- // \f[italic,true] makes text slanted.
- // \f[italic,false] de-slants the text.
- // \f[color0-255,0-255,0-255] changes the color of the text.
- // \f[color,default] will return the color to default.
- // \f[default] returns everything back to normal.
- // \_a[[http://www.website.com/](put text here)\_a can link a website in dialogue.
- // \0\s[0]\1\s[0]\_s(put dialogue here) has characters say dialogue at the same time.
- // The envelope %(username)
- // The envelope %(heshe)
- 
-//Envelopes
- //%(userfolder)
-
-//SURFACE GUIDE
-//put all your surfaces here with a word or two on what they are
-
-
-//nonoverlap_pool should make it so all your dialogue has an equal probability of being called, and it will do each line of dialogue before repeating them. Why is kind of technical and a bit outside the scope of this template, you can look into why elsewhere if you want.
+	else
+	{
+		LastTalk = ChainTalk
+	}
+	LastTalk
+}
 
 RandomTalk : nonoverlap_pool
-{	
-	//--Chains
-	//Chain dialogue is unique. A dialogue chain consists of multiple bits of dialogue that get called in order over a period of time.
-	
-	"\0\s[0]This is the first part of a chained dialogue.\w8\1\s[10]Second part to come when we next speak.\e:chain=achain"
-	
-	//Once a dialogue has entered a chain, they won't say any other random dialogue until the chain is finished.
-	
-	
-	if nowshell == "master" //This checks to see what shell they're currently using. You may remember this value being defined back in bootend.dic.
-	{
-	"\0\s[0]Here is dialogue related to the default shell.\w8\1\s[10]You can use this to comment on clothing your ghost is wearing.\e"
-	
-	"\0\s[0]Here is more dialogue related to the default shell.\e"
-	}
-
-/* Month dialogue
-
-	if month >= 12
-	{
-		"\0\s[0]This is dialogue for December.\w8\1\s[18]A cold month?\e"
-		
-		"\0\s[0]This is more dialogue for December.\w8\1\s[18]Still cold?\e"
-	}
-	
-	if month == 1
-	{
-		"\0\s[0]This is dialogue for January.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for January.\w8\1\s[10]That it is.\e"
-	}
-	if month == 2
-	{
-		"\0\s[0]This is dialogue for February.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for February.\w8\1\s[10]That it is.\e"
-	}
-	if month == 3
-	{
-		"\0\s[0]This is dialogue for March.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for March.\w8\1\s[10]That it is.\e"
-	}
-	if month == 4
-	{
-		"\0\s[0]This is dialogue for April.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for April.\w8\1\s[10]That it is.\e"
-	}
-	if month == 5
-	{
-		"\0\s[0]This is dialogue for May.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for May.\w8\1\s[10]That it is.\e"
-	}
-	if month == 6
-	{
-		"\0\s[0]This is dialogue for June.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for June.\w8\1\s[10]That it is.\e"
-	}
-	if month == 7
-	{
-		"\0\s[0]This is dialogue for July.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for July.\w8\1\s[10]That it is.\e"
-	}
-	if month == 8
-	{
-		"\0\s[0]This is dialogue for August.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for August.\w8\1\s[10]That it is.\e"
-	}
-	if month == 9
-	{
-		"\0\s[0]This is dialogue for September.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for September.\w8\1\s[10]That it is.\e"
-	}
-	if month == 10
-	{
-		"\0\s[0]This is dialogue for October.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for October.\w8\1\s[10]That it is.\e"
-	}
-	if month == 11
-	{
-		"\0\s[0]This is dialogue for November.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for November.\w8\1\s[10]That it is.\e"
-	}
-	
-	*/
-	
-	/*
-	//These ifs check what day of the week it is.
-	
-	if weekday == 1
-	{
-		"\0\s[0]This is dialogue for Monday.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for Monday.\w8\1\s[10]That it is.\e"
-	}
-	if weekday == 2
-	{
-		"\0\s[0]This is dialogue for Tuesday.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for Tuesday.\w8\1\s[10]That it is.\e"
-	}
-	if weekday == 3
-	{
-		"\0\s[0]This is dialogue for Wednesday.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for Wednesday.\w8\1\s[10]That it is.\e"
-	}
-	if weekday == 4
-	{
-		"\0\s[0]This is dialogue for Thursday.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for Thursday.\w8\1\s[10]That it is.\e"
-	}
-	if weekday == 5
-	{
-		"\0\s[0]This is dialogue for Friday.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for Friday.\w8\1\s[10]That it is.\e"
-	}
-	if weekday == 6
-	{
-		"\0\s[0]This is dialogue for Saturday.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for Saturday.\w8\1\s[10]That it is.\e"
-	}
-	if weekday == 0
-	{
-		"\0\s[0]This is dialogue for Sunday.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for Sunday.\w8\1\s[10]That it is.\e"
-	}
-	
-	//These ifs check for the time of day as defined in bootend.dic.
-	
-	if timeslot == "earlymorning"
-	{
-		"\0\s[0]This is dialogue for the early morning.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for early morning.\w8\1\s[10]That it is.\e"
-	}
-	if timeslot == "morning"
-	{
-		"\0\s[0]This is dialogue for the morning.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for the morning.\w8\1\s[10]That it is.\e"
-	}
-	if timeslot == "lunch"
-	{
-		"\0\s[0]This is dialogue for lunch time.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for lunch time.\w8\1\s[10]That it is.\e"
-	}
-	if timeslot == "afternoon"
-	{
-		"\0\s[0]This is dialogue for the afternoon.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for the afternoon.\w8\1\s[10]That it is.\e"
-	}
-	if timeslot == "evening"
-	{
-		"\0\s[0]This is dialogue for the evening.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for the evening.\w8\1\s[10]That it is.\e"
-	}
-	if timeslot == "latenight"
-	{
-		"\0\s[0]This is dialogue for the late night.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for the late night.\w8\1\s[10]That it is.\e"
-	}
-	if timeslot == "midnight"
-	{
-		"\0\s[0]This is dialogue for midnight.\w8\1\s[10]Yup.\e"
-		
-		"\0\s[0]This is more dialogue for midnight.\w8\1\s[10]That it is.\e"
-	}
-	*/
-	
-	//--Double Envelopes
-	//note that this is enclosed in its own set of brackets
-	{
-	_korean = lessonkor //Here, the envelope "lessonkor" (which is in word.dic) is stored as a new temporary value called _korean. As a reminder, when coding, it goes "4 = 2 + 2" and not "2 + 2 = 4". The result always comes first!
-	//If you look at lessonkor in word.dic, you'll see it goes "Korean word, meaning". So "Korean word" is the first value in that array, and "meaning" is the second. Arrays always start at 0, as a note.
-	_korword = _korean[0] //Now we make a temporary value called "_korword", which is what will store the Korean word. Since the Korean word is the first value in the array _korean which we just defined, then we can pull that value from the array with _korean[0]. [0] is telling it which entry in the array to take - in this case, the first one (again, arrays start at 0).
-	_kormean = _korean[1] //Now we make a temporary value called "_kormean", which is what will store the meaning of the Korean word. This is the second value in the array, so we can pull it out of _korean by using _korean[1].
-	
-	//Now we put it all together!
-	"\1\s[10]Here is an example of a double envelope. The Korean word is %(_korword).\w8\0\s[0]The word means %(_kormean).\e"
-	
-	//As you can see here, we then use the values we set above for _korword and _kormean up there in the dialogue as our new envelopes.
-	//The underscores in front of korword and kormean mean that the value is temporary, and will disappear when the dialogue has finished.
-	
-	//Additional Note - You can't test this kind of dialogue in Script Input. You'll have to wait until it comes up naturally in your ghost's random dialogue.
-	}
-	
-	//--Multiple Responses
-	
-	{ //Again, note the brackets around these unique bits of dialogue.
-	
-	"\0\s[0]I am asking you a generic question, Triangle. Generic question?\w8\1\s[10]"
-	--
-	"This is my first response."
-	"This is my second response."
-	"This is my third response."
-	"This is my fourth response."
-	"This is my fifth response."
-	"This is my sixth response."
-	--
-	"\w8\0\s[0]\n\n[half]"
-	-- 
-	"First response to your response."
-	"Second response to your response."
-	"Third response to your response."
-	"Fourth response to your response."
-	-- //closing dashes
-	"\e" //Dialogue ends
-	}
-}
-
-
-//--Chains
-//Here is where you will put your bits of chain dialogue.
-//Each chain function will go through each part of the chain in order even if it's in one function, until it goes to \e:chain=end which will end the chain. So you can put the entire chain dialogue into one place.
-
-achain
-{{CHAIN
-	//this will happen the first time the chain is called
-	"\0\s[0]Here is the second part of the chain.\w8\1\s[10]Will there be more?\e"
-	
-	//they will then go to this dialogue next
-	"\0\s[0]This is the third part of chained dialogue.\1\w8\s[10]This will lead to a fourth part.\e"
-	
-	//this will be the last piece of dialogue in the chain, then they will go back to their normal dialogue
-	"\0\s[0]This is the fourth piece of chained dialogue.\1\w8\s[10]This is the end.\e:chain=end"
-}}CHAIN
-
-//Pay careful attention to the CHAIN text and double brackets for these.
-//Note also it ends with \e:chain=end, basically ending the chain.
-
-
-//-OnMinuteChange
-//These are time-related bits of dialogue for your ghost to say. If you're uninterested, you can delete it all except for a line for MikireTalk. 
-
-//Keeps track of if an hour has passed. Just ignore this.
-HourCheck
 {
-if passmin >= 59
+	if mode == 1
 	{
-		passmin = 0
-		passhour = passhour + 1
+	"\0\s[3]As a Pokemon psychologist, I find the intricacies of their behavior fascinating.\e"
+	"\0\s[3]I often wonder what goes on inside the minds of Pokemon.\e:chain=achain1"
+	"\0\s[3]...How do their experiences shape their emotions and actions?\e:chain=achain1"
+	"\0\s[3]It's a never-ending exploration into the depths of their psychology!\e:chain=achain1"
+	"\0\s[0]Sometimes I talk to myself... \s[1]but hey, at least I'm a good listener!\e"
+	"\0\s[3]Why did the Pikachu bring an umbrella? \w8\w8\w8\s[1]Because there was a chance of 'thunder'!\e"
+	"\0\s[0]They say laughter is the best medicine. \s[4]Well, I'm always stocked up on Pokemon jokes!\e"
+	"\0\s[0]You know, being a Pokemon psychologist,\n\s[1]I've mastered the art of interpreting Pikachu's 'pika-pi' language!\e"
+	"\0\s[4]I'm a pro at Pokemon battles too!\s[0] Well, in my dreams at least.\e"
+	"\0\s[0]Despite being made of electricity, Rotom are actually very squishy to hold when they aren't in an appliance.\e"
+	"\0\s[3]Though it hasn't been documented, I firmly believe that there is a tropical variant of Oddish that looks like a Pinap Berry.\e"
+	"\0\s[0]Everyone keeps saying Ditto are failed DNA experiments and that you shouldn't eat them,\s[4] but I tried one and it tasted like bubblegum!\e"
+	"\0\s[3]Did you know Buizel have little pockets by their armpits where they hold rocks to open Shellder for food?\s[1] This is also why they learn Rock Tomb!\s[0]\w8\w8\w8\c\s[3]Oshawott do not have these pockets because they use their own shell instead.\e"
+	"\0\s[0]Tranquill lay eggs that don't hatch into Pokemon, I've seen it!\w8\n\s[2]Nobody believes me, but they do!\e"
+	"\0\s[0]Wurmple evolving into Cascoon and Silcoon isn't determined by nature or gender.\s[3]\nIt's actually determined by what the Wurmple ate in the wild, so watch their diets before throwing that Pokeball.\e"
+	"\0\s[2]If Dialga is the God of time, then why am I always late to meetings?\e"
+	"\0\s[4]Scovillain heads are tasty but very spicy...\w4\s[2]But trying to eat any part of a Capsakid besides their teeth will only result in food poisoning.\e"
+	"\0\s[0]Don't ask me how Skitty and Wailord can breed. Nobody else knows either.\e"
+	"\0\s[0]There was once a point in time where Ultra Balls were less effective at catching than Great Balls.\s[3]I suspect a manufacturing error.\e"
+	"\0\s[0]Houndoom are actually very sweet and gentle.\n\s[3]They just seem aggressive because the bones that grow out of them kinda hurt.\n\s[4] So give one a painkiller and prepare for cuddles!\e"
+	"\0\s[0]Skitty, Glameow, and Purrloin are actually all derived from the same common ancestor.\s[3]\nIt's not that different from how Carbink eventually becomes Diancie, but it's also similar to regional forms in a way.\e"
+	"\0\s[0]Floette are surprisingly good at writing in cursive. I think. I can't read cursive.\e"
+	"\0\s[3]I suspect that Eevee can evolve into any type, but only eight evolutions have been found so far.\w8\n\n\s[0]Please don't experiment in your own home;\s[2] you will not get a Ghost-type Eevee.\w6\nLet the professionals handle it.\s[0]\e"
+	"\0\s[3]Anytime you see a Chansey working at a Pokécenter,\w3 just know that they had to go through proper medical training to be certified.\s[0]\n\w8 It doesn't take long since they're a Chansey, but it's still important.\e"
+	"\0\s[3]Do you think if we somehow managed to get the correct stone, we could evolve Scyther into its other evolution from the past?\e"
+	//pokemon were born at level five in early gens but at 1 in later gens... is it just me or do new pokemon seem dumber?
 	}
-}
+	else
+	{PokeTalk}
 
+	case MyNature
+    {
+        when "Hardy"
+        {
+            "I'm hardy"
+        }
+        when "Lonely"
+        {
+            "I'm lonely"
+        }
+        when "Brave"
+        {
+            "I'm brave"
+        }
+        when "Adamant"
+        {
+            "I'm adamant"
+        }
+        when "Naughty"
+        {
+            "I'm naughty"
+        }
+        when "Bold"
+        {
+            "I'm bold"
+        }
+        when "Docile"
+        {
+            "I'm docile"
+        }
+        when "Relaxed"
+        {
+            "I'm relaxed"
+        }
+        when "Impish"
+        {
+            "I'm impish"
+        }
+        when "Lax"
+        {
+            "I'm lax"
+        }
+        when "Timid"
+        {
+            "I'm timid"
+        }
+        when "Hasty"
+        {
+            "I'm hasty"
+        }
+        when "Serious"
+        {
+            "I'm serious"
+        }
+        when "Jolly"
+        {
+            "I'm jolly"
+        }
+        when "Naive"
+        {
+            "I'm naive"
+        }
+        when "Modest"
+        {
+            "I'm modest"
+        }
+        when "Mild"
+        {
+            "I'm mild"
+        }
+        when "Quiet"
+        {
+            "I'm quiet"
+        }
+        when "Bashful"
+        {
+            "I'm bashful"
+        }
+        when "Rash"
+        {
+            "I'm rash"
+        }
+        when "Calm"
+        {
+            "I'm calm"
+        }
+        when "Gentle"
+        {
+            "I'm gentle"
+        }
+        when "Sassy"
+        {
+            "I'm sassy"
+        }
+        when "Careful"
+        {
+            "I'm careful"
+        }
+        when "Quirky"
+        {
+            "I'm quirky"
+        }
+    }
 
-OnMinuteChange //This is what will trigger time-based dialogue for your Ghost.
- {
-	HourCheck //checks to see if an hour has passed, ignore it
-	--
- 	if minute == 0 //These ifs will check what time it is. 
+	case MyType1
 	{
- 		if hour == 12 //And the hour equals 12, meaning it's noon. 
+		when "Normal"
 		{
- 			"\0\s[0]It's noon.\w8\1\s[15]Let's have a showdown!\w8\0\n\n[half]\s[9]There are no corrals here, dude.\e"
+			"I'm Normal!"
 		}
- 		elseif hour == 0
+		when "?"
 		{
- 			"\0\s[0]It's midnight!\e"
- 			"\0\s[0]This is another bit of dialogue for midnight.\w8\1\s[10]BooooOoooOOOooOOOOo.\e"
- 			"\0\s[0]This is the third bit of dialogue for midnight.\e"
+			"Azalea uwu"
 		}
-		else
+		others
 		{
-			"\0\s[0]It's %(hour12)'o clock.\e"
-			//%(hour12) stores the time. This is a general top of the hour notification.
+			"if you are seeing this there is an error, please report this to Kyo"
 		}
 	}
-	elseif hour == 23 && minute == 55 //this checks to see if the hour is 23 and the minutes are at 55... essentially, 11:55 pm.
+
+	case MyType2
 	{
-		"\0\s[0]5 minutes to midnight.\e"
-	}
-	elseif hour == 7 && minute == 30 && weekday == 0 //Here, it's checking for a specific time on a specific day.
-	{			
-		"\0\s[0]It's 7:30 on Sunday.\e"
-	}
-	//If you're not interested in these more specific checks, you can delete those last two elseifs and just leave the one for minute==0, or clear them all out as mentioned above, although leave in the HourCheck and mikireflag bits.
-	
-	//Don't touch this part.
-	elseif mikireflag == 1
- 	{
- 		MikireTalk
-	}
- }
-
-//--OnSecondChange
-//Like the above, this handles what happens every time a second goes by.
-
-OnSecondChange
- {
-	if passsec == 59
- 		{
-	 	passsec = 0
- 		passmin = passmin + 1
+		when "Normal"
+		{
+			"I'm Normal!"
 		}
- 	else
- 		{
-	 	passsec = passsec + 1
+		when "?"
+		{
+			"Azalea uwu"
 		}
-	if mikireflag == 0 && reference1 == 1 //Dialogue for putting them off the screen. You could make this a unique line if you wanted (Like "Hey! What are you doing?"), and have MikireTalk below be for if they continue to be offscreen ("Why are you leaving me out here? Help!" for example). I'll add an example bit of dialogue and comment it out, you can uncomment it and use it if you like, or just leave it out and use MikireTalk below.
-	{
-		//"\0\s[0]You've moved me off screen."
-		
-		MikireTalk
+		when " "
+		{
+			
+		}
+		others
+		{
+			"if you are seeing this there is an error, please report this to Kyo"
+		}
 	}
-	if mikireflag == 1 && reference1 == 0 //Dialogue for coming back on the screen
-	{
-		EndMikireTalk
-	}
-	mikireflag = reference1 //reference1 is if the ghost is offscreen or not
-	if reference2 == 1
-	{
- 		//This dialogue is for when the two characters are overlapping each other. If you don't want your characters to care, you can just leave this blank.
-		
- 		"\0\s[0]Me and Triangle are overlapping.\w8\1\s[19]That's strange since your resolution is %screenwidthx%screenheight, %(username). Shouldn't we have enough space?\4\e"
-	}
- }
 
- //---- MikireTalk ---------------------------------------------------------------------
- //MikireTalk is dialogue for when your main character is off-screen. Like if you dragged Girl over to the side of your monitor until she was partially concealed by it.
- 
-MikireTalk
- {
-	"\0\s[0]I'm off the screen.\w8\1\s[10]You can push Ctrl-Shift-F12 to bring her back."
-	//Note the hotkey combo Triangle mentions.
- }
-
- //----EndMikireTalk--------------------------------------------------------------------
- //For after you bring the character back on screen.
- 
-EndMikireTalk
- {
-	"\0\s[0]I'm no longer off the screen.\w8\1\s[19]What a shame.\w8\0\s[9]\n\n[half]Shut up.\e"
- }
-
-
-//**** OnSurfaceRestore *****************************************************************
-//What this does is that after a short period of time, the ghost will go back to its default pose, so you won't have a ghost stuck in one expression for too long.
-
-OnSurfaceRestore
- {
- 	//if reference0 == 4 || reference0 == 6 //This is checking what poses they are in. This looks to see if Girl is in pose 4 or pose 6, since she is reference0.
- 	//{
- 	//"\1\s[10]You're in a sad pose.\w8\0\s[0]I'll go back to normal then.\e"
- 	//}
- 	//elseif reference1 == 14 || reference1 == 16 //This is doing the same but for Triangle, since he's reference1. It looks to see if he's in pose 14 or post 16.
- 	//{
- 	//"\0\s[0]You look sad.\w8\1\s[10]I'll go back to normal.\e"
- 	//}
- 	//else
- 	//{
-	"\0\s[0]\1\s[10]\e"
-	//}
- }
-
- 
- //--OnKeyPress
- //This defines the hotkeys your ghost will use.
- 
-OnKeyPress
-{
-	if reference0 == "t"
-	{
-	OnAiTalk
-	}
-	elseif reference0 == "r"
-	{
-	OnLastTalk
-	}
-	elseif reference0 == "f1"
-	{
-	"\![open,readme]"
-	}
 }

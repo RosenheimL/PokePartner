@@ -1,0 +1,128 @@
+
+
+OnCurryDex
+{
+	flavors = ("Spicy", "Sour", "Dry", "Bitter", "Sweet", "Normal", "Strange")
+	berrys = ("Cheri", "Chesto", "Pecha", "Rawst", "Aspear", "Leppa", "Oran", "Persim", "Lum", "Sitrus", "Figy", "Wiki", "Mago", "Aguav", "Iapapa", "Pomeg", "Kelpsy", "Qualot", "Hondew", "Grepa", "Tamato")
+	//this is berry by raretity
+	berryOne = berrys[0,7]
+	berryTwo = berrys[8,14]
+	berryThree = berrys[14,20]
+	//berry means nothing to me any more
+	currybase = ("Flour", "Sausages", "Smoke-Poke Tail", "Boiled Egg", "Precooked Burger", "Tin of Beans", "Mixed Mushrooms", "Large Leek", "Pack of Potatoes", "Salad Mix", "Moomoo Cheese", "Coconut Milk", "Fresh Cream", "Bob's Food Tin", "Bach's Food Tin", "Brittle Bones", "Instant Noodles", "Packaged Curry")
+	foodtype = ("Meat", "Vegetable", "Dairy", "Strange")
+	//gotts associate my ass with... a bed fuck I need to sleep [Negumen]
+	Meat = currybase[1,4]
+	Veg = currybase[5,9]
+	Dairy = currybase[10,12]
+	Strange = currybase[13,17]
+}
+
+OnDiet
+{
+	function isMeat(food) {
+    // returns true if the food is meat, false otherwise
+}
+
+function isVegetable(food) {
+    // returns true if the food is a vegetable, false otherwise
+}
+
+function isDairy(food) {
+    // returns true if the food is dairy, false otherwise
+}
+
+function isStrange(food) {
+    // returns true if the food is strange, false otherwise
+}
+
+function isLactoseTolerant(pokemon) {
+    // returns true if the pokemon is lactose tolerant, false otherwise
+}
+
+function isDietCompatible(pokemon, food) {
+    if (isMeat(food) && pokemon.diet == "Carnivore") {
+        return true;
+    } else if (isVegetable(food) && pokemon.diet == "Herbivore") {
+        return true;
+    } else if (isDairy(food) && pokemon.dairyTolerance == "Yes") {
+        return true;
+    } else if (isStrange(food) && pokemon.diet == "Lithovore") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function feedPokemon(pokemon, food) {
+    if (isDietCompatible(pokemon, food)) {
+        // feed the pokemon
+    } else {
+        // the pokemon can't eat this food
+    }
+}
+}
+
+FlavorLib
+{
+  // Define arrays for each flavor
+	Spicy = ("Cheri", "Pecha", "Pomeg")
+	Dry = ("Rawst", "Lum")
+	Bitter = ("Chesto", "Wiki", "Kelpsy", "Hondew")
+	Sweet = ("Sitrus", "Figy", "Mago", "Aguav", "Iapapa", "Grepa", "Tamato")
+	Sour = ("Aspear", "Leppa", "Oran", "Persim")
+	
+// Index the flavor arrays into a single array
+	BerryFlavor = (Spicy, Sour, Dry, Bitter, Sweet)
+}
+
+OnCombineCurry
+{
+//flavor tracking tally land
+_FlavorTown
+{ 
+  _SpicyNum = 0
+  _DryNum = 0
+  _SweetNum = 0
+  _BitterNum = 0
+  _SourNum = 0 
+}
+
+_Recipe = ("user defined array, full of berries")
+foreach _Recipe; _berry //For every element in the recipe, perform the following code, with the element stored in '_berry'.
+{
+  if ASEARCH(_berry,BerryFlavor[0]) //if the berry is in the nested spicy array
+    {
+      _SpicyNum++
+    }
+    //Repeat ASEARCH for each flavor index
+
+_TotalFlavor = //highest Flavortown Variables
+}
+
+OnCreateCurry
+{
+//User input berries here, they are yeeted into _Recipe
+CombineCurry
+if 
+{"Congrats! you made Normal Curry!"}
+if
+{"Congrats! you made... something?"}
+else
+{"Congrats! you made %(_TotalFlavor) Curry!"}
+}
+
+OnIDrandom
+{
+    TrainerID = ""
+    _vowels = ("あ", "い", "う", "え", "お")
+    _length = 5
+    
+    for i in 1.._length
+    {
+        _index = Rand(0, Len(_vowels) - 1)
+        TrainerID = TrainerID + _vowels[_index]
+    }
+    
+    "%(TrainerID)"
+}

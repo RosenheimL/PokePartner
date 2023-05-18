@@ -1,34 +1,19 @@
 OnPokeID
 {
-	//why did you make this an array??
-	//Because of Evolusion case. it will one day be helpful
-Pokemon = {"Porygon","Porygon2"}
-PokeName = "Porygon" //this will be changed in PFB
-DexNat = 0137 //Number in the natdex
-DexReg = 01 //number in regional dex, regional dex refering to the collection of shells. if youre confused yell at Kyo [luc]
-Diet = "Strange" //No, you wont find this info in the pokedex most of the time. just feel it out. also check documentation
-Type = ("Normal") //this is an array for cases of dual type pokemon
-PokeVanished = 0 //Just keeps track of the shell resets, part of ID creation
-ID = 0
-//everything below this line will need to be reinitialized with release of pokemon
-MyNature = "null" //Randomize if null, should only save to ID gen on first rando though.
-IsTrueShiny = 3 //Randomize. if 3 it will randomize again, but shouldn't save to ID
-//PokeID should only naturally be 3 or null if freshly encountered either through clean installation or release. PokeID is generated to ensure pokemon are unique and to later implement a trading system. build the framwork now, use it later
-FriendVal = 0
-EXP = 0
- 
-	//pokemonID menu read out
-	{
-	Pokemon[0]
-	type[0] //this is set up an an array for pokemon with multiple types
-	//pokedex entry
-	"\0\s[0]%(Pokemon) is the first Artificial pokemon, capable of moving between physical space and the digital space. Many think of it as the protector of the internet\e"
-	MyNature //remember to randomize this later
-	
-	
-	"Your %(Pokemon) is currently feeling %(EmotionalState)"
-	}
+Pokemon = "Azalea"
+PokeName = "Azalea" //temp nickname for pokemon. Make this the same as the Pokemon
+NatDex = 0 //Number in the natdex
+Diet = "Omnivore" //Check README.txt. if unsure, ignore it
+MyType1 = "?" //Your Pokemon's types, if it's monotype then just leave the second mytype blank
+MyType2 = " "
+//Put your Pokemon's Dex Entry down here.
+
+PokeDexEntry = "Professor Azalea is not a pokemon... as far as we know at least"
 }
-//remind to self, you're gonna need to make documentation after the jam to streamline the shell making process [Kyo/Negumen]
-//Remember that you moved the Pokemonfirstboot and generation code to the bootend.dic [Chandra]
-//hunger is stored in the balls [Luc+Negumen]
+//alright, that's all for the Dex, if you want to include any particular talking 
+
+PokeTalk
+{
+	"\0\s[0] Super Rad Pokemon Dialogue!!\e"
+}
+

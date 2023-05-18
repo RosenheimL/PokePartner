@@ -9,7 +9,7 @@ version,1
 surface0
 //surface0 is the basic default pose for your main character.
 {
-	collision0,2,266,212,476,Head
+	collision0,30,261,202,353,Head
 
 	element0,overlay,surface0.png,0,0
 

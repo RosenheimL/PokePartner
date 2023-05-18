@@ -1,4 +1,4 @@
-OnPokemonarrays
+OnPokemonArrays
 {
 	//hey me, why the fuck [kyo]
 	//hey me, shut up and get it done [Chandra]
@@ -9,6 +9,12 @@ OnPokemonarrays
 	
 	types = ("Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy")
 	natures = ("Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty", "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky")
+	emotions = ("happy", "sad", "angry", "fine", "bored" ) //also Uncomfortable and scared but that's not random
+	needs = ("Hunger", "Thirst", "Energy", "Health", "Cleanliness") //probably won't use this array but I do need it as a note. Implement thirst later[kyo]
+	//calmdown preferences
+	sootheBell = ("Timid", "Jolly", "Sassy", "Adamant", "Impish", "Naive", "Quirky", "Lax", "Rash")
+	pokeDoll = ("Lonely", "Careful", "Naughty", "Modest", "Mild", "Hasty", "Bold", "Hardy")
+	justPetIt = ("Docile", "Relaxed", "Gentle", "Quiet", "Brave", "Serious", "Calm")
 }
 
 OnCurryDex
@@ -16,6 +22,7 @@ OnCurryDex
 	//Food system go brrr [kyo]
 	//needed arrays- Berries, Sandwitch, curry, flavors, 
 	// poffins and pokeblocks don't need arrays, they're unique. Maybe can have them be a simpler version but provide less happiness? yeah that works
+	diets = ("Pantrophic","Lithovore","Lactovore","Carnivore","Herbivore","Omnivore")
 	
 	flavors = ("Spicy", "Sour", "Dry", "Bitter", "Sweet", "Normal", "Strange")
 	berrys = ("Cheri", "Chesto", "Pecha", "Rawst", "Aspear", "Leppa", "Oran", "Persim", "Lum", "Sitrus", "Figy", "Wiki", "Mago", "Aguav", "Iapapa", "Pomeg", "Kelpsy", "Qualot", "Hondew", "Grepa", "Tamato")
@@ -32,4 +39,10 @@ OnCurryDex
 	foodtype[2] = currybase[10,12]
 	foodtype[3] = currybase[13,17]
 	//that's food wow
+	//define Diets
+	Lithovore = "Strange"
+	Lactvore = "Dairy"
+	Carnivore = "Meat"
+	Herbivore = "Vegetables"
+	Omnivore = foodtype[0] && foodtype[1]
 }
