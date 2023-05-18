@@ -5,7 +5,7 @@ OnFirstBoot
 	stroke = 0
 	LastTalk = ""
 	
-	"\1\s[10]\0\s[0]"
+	"\1\s[10]\0\s[0]text here"
 	}
 
 OnInitialize
@@ -27,29 +27,13 @@ OnInitialize
 
 OnBoot
 {
-	DICLOAD(pokeID.dic)
+	DICLOAD(currentshellpath + "/pokeID.dic")
 	OnPokeID
-	if nowshell = "master"; mode = 1
+	if Reference0 = "master"; mode = 1
 	else; mode = 0
-	_temp = SPLIT(SHIORI3FW.UserBirthday,":")
-	_user_birthday = "%(_temp[1])/%(_temp[2])" //M/D, if you want it D/M you can switch it around
-	_today = "%(_month)/%(_day)" //Again, switch this around if using D/M
-	
-	"\1\s[10]\0\s[0]"
-	--
-	if _today == _user_birthday
-	{
-		"\0\s[0]It is %(username)'s birthday today.\w8 Happy birthday, %(username).\w8 Developer,\w4 you can add an interesting message here.\w8 It can be as long as you like.\w8 Or, you can remove it entirely."
-	}
-	elseif _today == "1/1" //You can add whatever cool dates you want with more elseifs here
-	{
-		"\0\s[0]It's new year's day.\w8 Happy %(year),\w4 %(username)."
-	}
-	else //Normal boot
-	{
+
 		"\0\s[0]Hello %(username).\w8 Good to see you."
 		"\0\s[0]Hello.\w8 Ready to make something cool?"
-	}
 }
 
 OnClose
@@ -62,7 +46,7 @@ OnClose
 
 OnShellChanging
 {
-	DICUNLOAD(pokeID.dic)
+	DICUNLOAD("/pokeID.dic")
 	if reference0 == "master"
 	{
 		if mode == 1 
@@ -92,7 +76,8 @@ OnShellChanging
 
 OnShellChanged
 {
-	DICLOAD(Reference3\pokeID.dic[OnPokeID])
+	 currentshellpath = reference2
+	_a = DICLOAD(currentshellpath + "/file.dic")
 	if mode == 1 
 	{
 		"\0\s[1]\1\s[10]"
@@ -131,4 +116,24 @@ OnShellChanged
 			"\0\s[0]We are now using the unknown %(reference[0]) shell.\w8\e"
 		}
 	}
+}
+
+//OnShellChanged
+//{
+//  currentshellpath = reference2
+//_a = DICLOAD(currentshellpath + "/file.dic") 
+//}
+
+
+//property system:
+
+OnGetShell
+{
+   "\![get,property,OnShellPath,currentghost.shelllist.current.path]"
+}
+
+OnShellPath
+{
+  currentshellpath = reference0
+  _a = DICLOAD(currentshellpath + "/file.dic") 
 }
