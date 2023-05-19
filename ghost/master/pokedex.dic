@@ -1,4 +1,5 @@
-OnPokemonArrays
+
+OnPokedex
 {
 	//hey me, why the fuck [kyo]
 	//hey me, shut up and get it done [Chandra]
@@ -27,6 +28,7 @@ OnCurryDex
 	flavors = ("Spicy", "Sour", "Dry", "Bitter", "Sweet", "Normal", "Strange")
 	berrys = ("Cheri", "Chesto", "Pecha", "Rawst", "Aspear", "Leppa", "Oran", "Persim", "Lum", "Sitrus", "Figy", "Wiki", "Mago", "Aguav", "Iapapa", "Pomeg", "Kelpsy", "Qualot", "Hondew", "Grepa", "Tamato")
 	//this is berry by raretity
+	//this is for advenure pools.
 	berryOne = berrys[0,7]
 	berryTwo = berrys[8,14]
 	berryThree = berrys[14,20]
@@ -40,9 +42,33 @@ OnCurryDex
 	foodtype[3] = currybase[13,17]
 	//that's food wow
 	//define Diets
-	Lithovore = "Strange"
-	Lactvore = "Dairy"
-	Carnivore = "Meat"
-	Herbivore = "Vegetables"
+	Lithovore = foodtype[3]
+	Lactovore = foodtype[2]
+	Carnivore = foodtype[0]
+	Herbivore = foodtype[1]
 	Omnivore = foodtype[0] && foodtype[1]
+	Pantrophic = foodtype
+}
+//very Painful berry flavor list T^T^T^T^T
+//will make associated arrays 
+//wait no didn't I already go through this. I can just make flavor arrays that contain all relevant berries!
+//okay. do that then go get the array compare chatgpt wrote. it should works
+
+OnWhatFlavorIsThat //help me
+{
+pot = IARRAY
+
+//adding
+_SpicyPlus = ("cheri", "leppa", "oran", "persim", "lum", "figy", "pomeg", "qualot" ,"hondew", "tamato", "occa", "rindo", "chople", "shuca", "tanga", "charti", "liechi", "petaya", "apicot", "lansat", "starf", "enigma", "rowap", "kee", "maranga" )
+_SourPlus = ("aspear", "leppa", "oran", "persim", "sitrus", "iapapa", "wepear", "pinap", "kelpsy", "qualot", "grepa", "rabuta", "nomel", "durin", "belue", "wacan", "yache", "kebia", "payapa", "tanga", "colbur", "salac", "petaya", "apicot", "lansat", "starf", "jaboca", "rowap")
+_DryPlus = ("chesto", "oran", "persim", "lum", "sitrus", "wiki", "razz", "bluk", "kelpsy", "hondew", "grepa", "tamato", "cornn", "spelon", "pamtre", "passho", "yache", "kebia", "coba", "charti", "kasib", "babiri", "chilan", "liechi", "ganlon", "apicot", "lansat", "starf", "enigma", "micle")
+_BitterPlus = ("rawst", "leppa", "oran", "lum", "sitrus", "aguav", "nanab", "wepear", "pomeg", "kelpsy", "hondew", "magost", "rabuta", "watmel", "durin", "passho", "rindo", "chople", "coba", "haban", "colbur", "ganlon", "salac", "petaya", "lansat", "starf", "custap", "jaboca")
+_SweetPlus = ("pecha", "leppa", "persim", "lum", "sitrus", "mago", "bluk", "nanab", "pomeg", "qualot", "grepa", "cornn", "magost", "pamtre", "watmel", "occa", "wacan", "shuca", "payapa", "kasib", "haban", "chilan", "liechi", "ganlon", "salac", "lansat", "starf", "micle", "custap")
+//masking
+_SourMinus = ("charti", "cheri", "chople", "enigma", "figy", "hondew", "liechi", "lum", "occa", "pomeg", "shuca")
+_SweetMinus = ("coba", "colbur", "oran", "passho", "petaya", "rowap")
+_DryMinus = ("aguav", "custap", "haban", "leppa", "rawst", "rindo")
+_BitterMinus = ("apicot", "chesto", "chilan", "kasib", "micle", "persim", "qualot", "tamato", "tanga", "wiki", "yache")
+_SpicyMinus = ("aspear", "babiri", "ganlon", "grepa", "iapapa", "jaboca", "kebia", "kelpsy", "payapa", "roseli", "sitrus", "salac", "wacan")
+
 }

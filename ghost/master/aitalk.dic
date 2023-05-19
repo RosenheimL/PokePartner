@@ -13,7 +13,38 @@ OnAiTalk
 
 RandomTalk : nonoverlap_pool
 {
-	OnPokeTalk
+	if mode == 1
+	{
+	"\0\s[3]As a Pokemon psychologist, I find the intricacies of their behavior fascinating.\e"
+	"\0\s[3]I often wonder what goes on inside the minds of Pokemon.\e:chain=achain1"
+	"\0\s[3]...How do their experiences shape their emotions and actions?\e:chain=achain1"
+	"\0\s[3]It's a never-ending exploration into the depths of their psychology!\e:chain=achain1"
+	"\0\s[0]Sometimes I talk to myself... \s[1]but hey, at least I'm a good listener!\e"
+	"\0\s[3]Why did the Pikachu bring an umbrella? \w8\w8\w8\s[1]Because there was a chance of 'rain dance' and 'thunder'!\e"
+	"\0\s[0]They say laughter is the best medicine. \s[4]Well, I'm always stocked up on Pokemon jokes!\e"
+	"\0\s[0]You know, being a Pokemon psychologist,\n\s[1]I've mastered the art of interpreting Pikachu's 'pika-pi' language!\e"
+	"\0\s[4]I'm a pro at Pokemon battles too!\s[0] Well, in my dreams at least.\e"
+	"\0\s[0]Despite being made of electricity, Rotom are actually very squishy to hold when they aren't in an appliance.\e"
+	"\0\s[3]Though it hasn't been documented, I firmly believe that there is a tropical variant of Oddish that looks like a Pinap Berry.\e"
+	"\0\s[0]Everyone keeps saying Ditto are failed DNA experiments and that you shouldn't eat them,\s[4] but I tried one and it tasted like bubblegum!\e"
+	"\0\s[3]Did you know Buizel have little pockets by their armpits where they hold rocks to open Shellder for food?\s[1] This is also why they learn Rock Tomb!\s[0]\w8\w8\w8\c\s[3]Oshawott do not have these pockets because they use their own shell instead.\e"
+	"\0\s[0]Tranquill lay eggs that don't hatch into Pokemon, I've seen it!\w8\n\s[2]Nobody believes me, but they do!\e"
+	"\0\s[0]Wurmple evolving into Cascoon and Silcoon isn't determined by nature or gender.\s[3]\nIt's actually determined by what the Wurmple ate in the wild, so watch their diets before throwing that Pokeball.\e"
+	"\0\s[2]If Dialga is the God of time, then why am I always late to meetings?\e"
+	"\0\s[4]Scovillain heads are tasty but very spicy...\w4\s[2]But trying to eat any part of a Capsakid besides their teeth will only result in food poisoning.\e"
+	"\0\s[0]Don't ask me how Skitty and Wailord can breed. Nobody else knows either.\e"
+	"\0\s[0]There was once a point in time where Ultra Balls were less effective at catching than Great Balls.\s[3]I suspect a manufacturing error.\e"
+	"\0\s[0]Houndoom are actually very sweet and gentle.\n\s[3]They just seem aggressive because the bones that grow out of them kinda hurt.\n\s[4] So give one a painkiller and prepare for cuddles!\e"
+	"\0\s[0]Skitty, Glameow, and Purrloin are actually all derived from the same common ancestor.\s[3]\nIt's not that different from how Carbink eventually becomes Diancie, but it's also similar to regional forms in a way.\e"
+	"\0\s[0]Floette are surprisingly good at writing in cursive. I think. I can't read cursive.\e"
+	"\0\s[3]I suspect that Eevee can evolve into any type, but only eight evolutions have been found so far.\w8\n\n\s[0]Please don't experiment in your own home;\s[2] you will not get a Ghost-type Eevee.\w6\nLet the professionals handle it.\s[0]\e"
+	"\0\s[3]Anytime you see a Chansey working at a Pokécenter,\w3 just know that they had to go through proper medical training to be certified.\s[0]\n\w8 It doesn't take long since they're a Chansey, but it's still important.\e"
+	"\0\s[3]Do you think if we somehow managed to get the correct stone, we could evolve Scyther into its other evolution from the past?\e"
+	}
+	else
+	{
+		OnPokeTalk
+	}
 
 	case MyNature
     {

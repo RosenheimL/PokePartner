@@ -1,0 +1,168 @@
+OnMorningTest
+{
+    array1 = ("apple", "banana", "orange", "grape", "watermelon")
+    array2 = ("orange", "grape")
+    _matches = 0
+
+    foreach array2; value
+    {
+        _index = ASEARCH(value, array1)
+        if _index != -1
+        {
+            _matches += 1
+        }
+    }
+
+    "Number of matches: %(_matches)"
+
+//Array for inventory editing
+array1 = ("apple", "banana", "orange", "grape", "watermelon")
+array2 = ("orange", "grape")
+_matches = 0
+_matchFound = true
+
+foreach array2; value
+{
+    _index = ASEARCH(value, array1)
+    if _index == -1
+    {
+        _matchFound = false
+        break
+    }
+}
+
+if _matchFound
+{
+    foreach array2; value
+    {
+        _index = ASEARCH(value, array1)
+        array1[_index] = ""  // Remove the matched value from array1
+    }
+    _matches = ARRAYSIZE(array2)  // Set _matches to the number of elements in array2
+}
+
+"Number of matches: %(_matches)"
+
+}
+//TEST VICTORY APPLY EVERYWHERE
+
+OnAdventure
+{
+    "You send your Pokemon on an adventure.\0\s[-1]\w[5000]"
+    _adven = RAND(3)+1
+    --
+if _adven = 1
+{
+    if friendship > 35
+    {
+        _berry1 = berryOne[RAND(ARRAYSIZE(berryOne))] + " Berry"
+        _berry2 = berryTwo[RAND(ARRAYSIZE(berryTwo))] + " Berry"
+        _berry3 = berryThree[RAND(ARRAYSIZE(berryThree))] + " Berry"
+
+        if friendship > 140 && friendship < 220
+        {
+            MyBerrys ,= (_berry1, _berry2)
+            "%(PokeName) found a couple berries on its adventure! It hands you a %(_berry1) and a %(_berry2)"
+        }
+        elseif friendship >= 220
+        {
+            MyBerrys ,= (_berry1, _berry2, _berry3)
+            "%(PokeName) came back with a handful of berries! It seemed to work very hard and found you; a %(_berry1), a %(_berry2), and a %(_berry3)!"
+        }
+        else
+        {
+            MyBerrys ,= _berry1
+            "Your %(Pokemon) found a %(_berry1)! It hands the berry to you."
+        }
+    }
+    else
+    {
+        hungr += 5
+        "Your %(Pokemon) found a berry on its adventure, though you can only tell from the berry juice mark near its mouth...\nIt quickly wipes it away though, seemingly hoping you didn't notice."
+        "Your %(Pokemon) seemed to find something while out, but it doesn't seem like sharing."
+    }
+}
+
+elseif _adven = 2
+{
+    "%(Pokemon) won a battle on their adventure!"
+    _plusEXP = RAND(50) + 1
+    EXP = EXP + _plusEXP
+    
+    // Hurt chance
+    _ouchie = RAND(2)
+    
+    if _ouchie = 1
+    {
+        Health = Health - RAND(26)
+        
+        if Health <= 25
+        {
+            "%(Pokemon) seems like it's on the brink of fainting.\nYour Poke!Partner's health seems low! Do you want to call the PokeCenter?\n\n[half]\q[Yes Please, OnPokeCenter]\n\q[No, it's fine, CANCEL]"
+            emotion = "uncomfortable"
+        }
+        elseif Health >= 60
+        {
+            "\0\s[2]%(Pokemon) seems quite proud of its victory."
+            emotion = "Happy"
+        }
+        else
+        {
+            "%(Pokemon) seems like it might have gotten hurt in the scuffle though..."
+            emotion = "angry"
+        }
+    }
+}
+
+	
+elseif _adven = 3
+{
+    if friendship > 140 && friendship < 220
+    {
+        _₽₽ = RAND(301) + 100
+        ₽ = ₽ + _₽₽
+        "%(PokeName) returns with some money! It gives you %(_₽₽)\e"
+    }
+    elseif friendship >= 220
+    {
+        _₽₽ = RAND(501) + 200
+        ₽ = ₽ + _₽₽
+        "%(PokeName) found you a big bag of PokeDollars! You get %(_₽₽)\e"
+        
+        if nature = "naughty" || nature = "impish"
+        {
+            "%(PokeName) came back with... a wallet?\nYou return it to the owner who thanks you with %(_₽₽)\e"
+        }
+    }
+    elseif friendship < 36
+    {
+        _₽₽ = RAND(401) + 50
+        ₽ = ₽ + _₽₽
+        "The %(Pokemon) came back with a small bag of money. Are they trying to get your approval? You'd need more than %(_₽₽) for that...\e"
+    }
+    else
+    {
+        _₽₽ = RAND(101) + 100
+        ₽ = ₽ + _₽₽
+        "Your %(Pokemon) brought back a bit of money. You get %(_₽₽)\e"
+    }
+}
+//your pokemon came back with money... is that someones wallet?["peanut"]
+}
+
+OnInventory : all
+{
+	"\1\s[10]Your bag is currently holding:"
+	"₽%(₽)\n\n[half]"
+	"Soothe bells, %(Soothebells)\n"
+	"Poke Dolls, %(Pokedolls)\n"
+	"Berry Inventory"
+    "\n\n[half]"
+	"%(MyBerrys)\e"
+    /*
+	foreach berryInventory; _berry
+    {
+        "%(_berry), "
+    }
+	*/
+}

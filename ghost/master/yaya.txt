@@ -17,6 +17,8 @@ dic, sakura_menu.dic
 dic, word.dic
 dic, anchor.dic
 dic, PokeAi.dic
+dic, EXP.dic
+dic, pokedex.dic
 
 msglang,english
 

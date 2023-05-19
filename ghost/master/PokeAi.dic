@@ -1,47 +1,118 @@
-
 //PokeAI.dic
 // Storing Variables in here
+//Stop coding things in here [Chandra]
+//FITE ME [Luc]
+
+//gotta track the user stuff I think. I'll add it here to be safe
+//I did in fact, end up using this for something
+OnTrainerID
+{
+TrainerID = " "
+PokeVanished = 0 //Just keeps track of how many Pokemon you've released... released is a relative term since none of the poke!program pokemon are in balls to start with?? move on luc
+₽ = 0
+PokeDolls = 0
+SootheBells = 0
+MyBerrys = IARRAY
+}
 
 OnID
 {
-PokeName = "Azalea" //temp nickname for pokemon. Make this the same as the Pokemon
+Pokemon = "Azalea" 
 NatDex = 0 //Number in the natdex
 Diet = "Omnivore" //Check README.txt. if unsure, ignore it
-MyType1 = "?" //Your Pokemon's types, if it's monotype then just leave the second mytype blank
+MyType1 = "Professor" //Your Pokemon's types, if it's monotype then just leave the second mytype blank
 MyType2 = " "
 //Put your Pokemon's Dex Entry down here.
 
 PokeDexEntry = "Professor Azalea is not a pokemon... as far as we know at least"
+}
+//alright, that's all for the Dex, if you want to include any particular talking 
 
-//Shellmakers now move on to PokeTalk
-//Below this is Random genned stuff, don't touch
+OnPokeID
+{
+Pokemon = "Porygon"
+NatDex = 0137 //Number in the natdex
+Diet = "Strange" //Check README.txt. if unsure, ignore it
+MyType1 = "Normal" //Your Pokemon's types, if it's monotype then just least the second mytype blank
+MyType2 = " "
+//Put your Pokemon's Dex Entry down here.
+
+PokeDexEntry = "\0\s[0]Porygon is the first Artificial pokemon, capable of moving between physical space and the digital space. Many think of it as the protector of the internet\e"
 
 }
 
-OniniPokeEgo
+OnSetPokeEgo
 {
 //This is for variables that are set Specifically at SFB, deal with this after the coffee kicks in
 //We'll need to make a seperate function that will be append to the PokeAI.dic in the folder.
 //rerolls aren't do-able right now. build in a function that removes this later
-PokeVanished = 0 //Just keeps track of the shell rerolls
-FirstTime = 0 //Switch used to run the randomizing sequence
+PBF = 0 //Switch used to run the randomizing sequence
 MyNature = "" 
 MyFlavor = "" //set random secondary liked flavor
-IsShiny = 0 
-FirstFeed = 0 
+IsShiny = 0
 }
+
+OnEmotionFlux
+{
+	OnPokemonArrays
+	if emotion != "fine" || "uncomfortable" || "scared"
+	{
+		_flux = RAND(2)
+		if _flux = 2
+		{
+			emotion = "fine"
+		}
+		else
+		{
+			emotion = emotions[RAND(ARRAYSIZE(emotions))] 
+		}
+	}
+}
+
 
 PokeInitalize 
 {
 //look man I do Not understand even Slightly how YAYA stores Data. it sucks
 //I do know however that Most of What WAS PokeEgo should go in here now though
+	FriendVal = 70
 	Hungr = 0
 	Health = 0
 	Emotion = "fine"
 }
 
-OnPFB : void
+ForPFB
 {
-	OniniPokeEgo
+	OnSetPokeEgo
 	
+	//add some dialogue later, here is temp
+	"\0\s[0]A new Pokemon Comes over from the Poke!Partner Daycare.\1\s[10]\i[3] It hasn't been named yet, what would you like to name it?\![open,inputbox,OnNameMon,-1]"
+}
+
+OnPokeTalk
+{
+if emotion = "fine" || "happy"
+{
+"\0\s[5]%(nowshell) seems to be analyzing something on its screen.\w4\nIt must be processing some data.\e"
+"\0\s[1]\s[4]\s[0]Porygon briefly shifts into a gyroelongated pentagonal bipyramid,\w3 then shifts back before you can get a proper look at it\e"
+"\0\s[5]Porygon looks at your personal files,\s[0] but doesn't seem interested\e"
+"\0\s[2]Porygon takes a screenshot of itself,\s[4] but deletes it before you notice\s[0]\e"
+"\0Porygon switches its feet to the other sides. You can't tell the difference\e"
+}
+if health <= 40
+{
+"\0\s[1]%(nowshell) looks a bit glitchy.\w4\nMaybe it needs to be debugged?\e"
+}
+if emotion = "happy"
+{
+"\0\s[2]Porygon spins its tail while tapping its feet. It seems happy\e"
+}
+if emotion = "angry"
+{
+	"\0\s[7]\i[0]Porygon tries to delete your system 32,\s[4] but it doesn't have admin permission and gives up\s[8]\e"
+	"\0\s[4]\w2\s[0]Porygon knocks over the recycle bin program. It seems annoyed..."
+}
+if emotion = "bored"
+{
+	"Porygon shuffles your file folders, then sorts them back into place\e"
+}
 }

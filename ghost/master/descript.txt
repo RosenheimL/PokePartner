@@ -1,15 +1,15 @@
 charset,UTF-8
 
-name,Simplicity Template
+name,The Poke!Partner Beta
 type,ghost
 
 shiori,yaya.dll
 
-craftman,
-craftmanurl,
+craftman, The Poke!Partner Team
+craftmanurl,pokepartner.carrd.co
 
-sakura.name,
-kero.name,
+sakura.name, Azalea
+kero.name, Rotom
 
 icon,icon.ico
 

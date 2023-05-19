@@ -9,19 +9,51 @@ SakuraMenuGreetings : nonoverlap
 
 //Because there is an all modifier here, you don't need to write -- between menu options
 OnSakuraMenu : all
+ {	
+	if mode == 1
+	{
+		//These four statements basically get the day of the week, whether it's AM or PM, the hour, and the time. It's putting together the information to display the time at the bottom of the balloon.
+		"\n\n\_q\b2" //\_q means quick session, meaning all the text from this point on will display instantly instead of a few letters at a time like normal ghost dialogue.
+		if lastTalk != ""
+		{
+		"\![*]\q[Repeat Last Dialogue,OnLastTalk]\n\n[half]"
+		}
+		"\![*]\q[Say something,OnAiTalk]\n"//This option will force the ghost to say something from aitalk if the user clicks it.
+		"\![*]\q[Config Menu,OnTalkRateMenu]\n"
+		"\![*]\q[Functions,dosomething]\n\n[half]"
+		"\![*]\q[Nevermind,CANCEL]"
+	}
+	else //If not Azaela 
+	{
+		"\n\n\_q\b2" //\_q means quick session, meaning all the text from this point on will display instantly instead of a few letters at a time like normal ghost dialogue.
+		if lastTalk != ""
+		{
+		"\![*]\q[Repeat Last Dialogue,OnLastTalk]\n\n[half]"
+		}
+		"\![*]\q[Say something,OnAiTalk]\n\n[half]"//This option will force the ghost to say something from aitalk if the user clicks it.
+		"\![*]\q[Make some Food,Select.MakeFood]\n"
+		"\![*]\q[Check Status,OnPokeStatus]\n"
+		"\![*]\q[Send on Advenure,OnAdventure]\n"
+		"\![*]\q[Config Menu,OnTalkRateMenu]\n"
+		"\![*]\q[Nevermind,CANCEL]\e"
+	}
+}
+
+OnFeedPoke.start : all
 {
-	"\0\s[0]\b2\![set,autoscroll,disable]"
-	if SHIORI3FW.Eventid == "OnMouseDoubleClick"; SakuraMenuGreetings //The check here is so they won't comment if you click the back button. Remove if you prefer
-	
-	"\n\n\_q"
-	
-	"\![*]\q[Talk to me,OnAiTalk]"
-	if LastTalk != ""; "  \![*]\q[Say that again,OnLastTalk]"
-	"\n\n"
-	
-	"\![*]\q[Change talk rate,OnTalkRateMenu]\n\n"
-	
-	"\![*]\q[Nevermind,blank]"	
+	"You can give your Pokemon some food. What kind is it?\n\n[half]"
+
+	"\q[Spicy,OnFeedPoke,spicy]\n"
+	"\q[Sweet,OnFeedPoke,sweet]\n"
+	"\q[Strange,OnFeedPoke,strange]"
+}
+
+OnPokeStatus : all
+{
+	"You have %(FriendVal) friendship points with your Pokemon.\n"
+	"Your Pokemon has %(EXP) Experience points.\n"
+	"Your Pokemon is at %(Hungr)/100 hunger.\n"
+	"Your Pokemon's health is at %(Health)."
 }
 
 OnLastTalk
@@ -55,4 +87,67 @@ OnTalkRateMenu : all
 OnTalkRateChange
 {
 	aitalkinterval = TOINT(reference0)
+}
+
+
+
+Select.MakeFood : all //feed the fucker. Rosenheim Version
+{
+	OnCurryDex
+	if FirstFeed = 0
+	{
+	"\1\s[10]No Cookware found, calling resources .\w2.\w2.\w2.\c\i[3] Hi, you need some cookwear? Sorry but I actually lost our cooking pot!\nBut if you need I can Send over a Stuffed Poffin for your Poke Partner to eat!\n I will just you to give me some berries~"
+	"\q[Berries??,Select.ExplainWhere]"
+	}
+	else
+	{
+	"\1\s[10]\i[3] Hi! Need more Poffins? Okay! Do you have any Berries I can use for them?"
+	}
+	"\q[Sure do!,Select.Flavor]"
+	//ohgodohfuck
+	"\q[Nope all out,Select.Flavourless]"
+	//Select Filling
+}
+
+Select.Flavor
+{
+	"\1\s[10]\i[3]Wonderful! In that case How about you tell me What Berries you'd like to use! You can give me up to 5 berries before my bowl is full. Make sure you put a comma between each entry!"
+	"\0\s[5]%(MyBerrys)\n"
+	
+}
+
+IsValidBerry
+{
+	//help
+_pot = IARRAY
+_matches = 0
+_matchFound = true
+
+foreach _pot; value
+{
+    _index = ASEARCH(value, MyBerrys)
+    if _index == -1
+    {
+        _matchFound = false
+        break
+    }
+}
+
+if _matchFound
+{
+    foreach _pot; value
+    {
+        _index = ASEARCH(value, MyBerrys)
+        MyBerrys[_index] = ""  // Remove the matched value from array1
+    }
+    _matches = ARRAYSIZE(_pot)  // Set _matches to the number of elements in array2
+} 
+OnWhatFlavorIsThat
+}
+
+Select.Flavorless
+{
+	"Hey that's fair. Not everyone can afford a lot of berries!\n"
+	"Just tell me what kind of Filling you'd like then~\n\n[half]"
+	
 }

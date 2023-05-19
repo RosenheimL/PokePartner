@@ -27,3 +27,117 @@ favoredcolors
 */
 
 //And if you're not interested in making word lists like this at all, you can just remove this whole file! Or use it for something else, you do you
+OnNameMon : all
+{
+	tempname = reference0 //this stores the name value from reference0 in tempname
+	reference0 = TOLOWER(reference0) //changes it to lowercase
+	reference0 = REPLACE(reference0," ","") //removes spaces
+	reference0 = REPLACE(reference0,".","") //removes periods
+	reference0 = REPLACE(reference0,"-","") //removes dashes
+	//Those extra TOLOWER/REPLACE things up there basically clean up the user's input so you don't have to check for Girl, GIRL, girl, GiRl, etc. It'll make it much easier to check for any specific name, since you won't have to account for any edge cases. Note that the names you will be checking for should be in all lowercase, however.
+	
+	if reference0 == "azalea" //this checks to see if the user input any variation of the name "Girl".
+	{
+		"Are you sure you wanna name the pokemon this? that might get confusing... Try Again please\![open,inputbox,OnNameMon,-1]"
+	}
+	elseif reference0 == "" //This is if the user doesn't put in a name at all, since that'd also get awkward in dialogue.
+	{
+		PokeName = Pokemon
+		
+		"\1\s[10]\i[3]You don't them to have a name? Well Fair enough!"
+	}
+	elseif reference0 == Pokemon
+	{
+		"Oh that's what they're already named.. Well that's fine!"
+	}
+	"That's all from me then. Have fun with %(PokeName)\e"
+	if PokeSpawn == 0; Pokespawn = 1
+}
+
+
+//User Name Teach
+OnNameTeach : all
+{
+	tempname = reference0 //this stores the name value from reference0 in tempname
+	reference0 = TOLOWER(reference0) //changes it to lowercase
+	reference0 = REPLACE(reference0," ","") //removes spaces
+	reference0 = REPLACE(reference0,".","") //removes periods
+	reference0 = REPLACE(reference0,"-","") //removes dashes
+	
+	//Those extra TOLOWER/REPLACE things up there basically clean up the user's input so you don't have to check for Girl, GIRL, girl, GiRl, etc. It'll make it much easier to check for any specific name, since you won't have to account for any edge cases. Note that the names you will be checking for should be in all lowercase, however.
+	
+	if reference0 == "azalea" //this checks to see if the user input any variation of the name "Girl".
+	{
+		"\0\s[0]That's my name.\w8\nThat might be confusing. You should try again.\![open,inputbox,OnNameTeach,-1]"
+		//Note here that it's using the same tag as above to reopen the text box to let the user put in another name.
+	}
+	elseif reference0 == "" //This is if the user doesn't put in a name at all, since that'd also get awkward in dialogue.
+	{
+		username = "Trainer" 
+		
+		"\0\s[3]You didn't put in anything.\w8\0\s[0]Well I think just calling you Trainer is fine?\e"
+	}
+	else //if the user put in something not specified above, ie a proper name the ghost can use. 
+	{
+		"\0\s[3]\b[2]"
+		"Do you want a title?\w4\n\n[half]\![*]\q[Nope,titlenone]\n" 
+		"\![*]\q[Youngster,joey]\n"
+		"\![*]\q[Ace Trainer,ace]\n"
+		"\![*]\q[Researcher,researcher]\n"
+		"\![*]\q[Gym Leader,gym]\n"
+		"\![*]\q[Champion,champ]\n"
+	}
+}
+
+Select.titlenone
+{
+		username = tempname
+		NameDone
+}
+
+Select.joey
+{
+		username = "Youngster	" + tempname
+		NameDone
+}
+
+Select.ace
+{
+		username = "Ace Trainer " + tempname
+		NameDone
+}
+		
+Select.researcher
+{
+		username = "Researcher " + tempname
+		NameDone
+}
+
+Select.gym
+{
+		username = "Gym Leader " + tempname
+		NameDone
+}
+
+Select.champ
+{
+		username = "Champion	" + tempname
+		NameDone
+}
+//--NameDone
+//This is the final bit of dialogue your ghosts will have when the user changes their name. There is a special section here for when the user first boots the ghost.
+
+NameDone
+{
+	if firstboot == 1 //this checks for the flag that was set during the firstboot sequence
+	{
+		firstboot = 0 //this turns the flag off
+		
+		//This dialogue will display the first time the user puts in their name.
+		"\0\s[0]Thank you for joining the program, %(username)!\w8\s[4]I hope you enjoy working together with me~\e"
+	}
+	else
+	{
+	"\0\s[0]Okay, I'll call you %(username) from now on!\e"
+	}	
+}

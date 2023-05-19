@@ -1,14 +1,14 @@
 Charset,UTF-8
 __system_settings_version__,2
 balloon,C:\Users\Lucifen Kobylka\Documents\SSP fresh\balloon\BlackWhite2\
-scriptbox.left,525
+scriptbox.left,1145
 shiori.debugnotify,1
-Char.VirtualDesktop,ca00a13c-7c96-4d56-a877-a405ffe2fc8a
-Char0.center,1185
-scriptbox.top,287
+Char.VirtualDesktop,36b52b3b-5061-4c02-a27b-2c7f9274c806
+Char0.center,1404
+scriptbox.top,94
 shell,shell\master\
 FirstBoot,booted
-Char1.center,1339
+Char1.center,1511
 shell.ischanged.2,1
 DeveloperPalette.visible,1
 __system_written_flag_do_not_remove__,written

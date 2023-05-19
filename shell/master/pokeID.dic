@@ -1,4 +1,4 @@
-OnPokeID
+OnID
 {
 Pokemon = "Azalea"
 PokeName = "Azalea" //temp nickname for pokemon. Make this the same as the Pokemon

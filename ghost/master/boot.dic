@@ -4,8 +4,10 @@ OnFirstBoot
 	//Note - I haven't added anything about username or pronouns here because it's all handled by the SSP prefs
 	stroke = 0
 	LastTalk = ""
-	
-	"\1\s[10]\0\s[0]text here"
+	FirstFeed = 0
+	username = "Trainer"
+	"\![enter,passivemode]\1\s[10]\0\s[0]Hello, and welcome to the Poke!Partner Program! I'm Professor Azalea, and I'm thrilled to have a new member!\nAs explained on the sign up sheet, this program is for studying the daily life and relationships between Trainers and their pokemon\w8\w8\w8\cTo Get Started may I please have your name? \![open,inputbox,OnNameTeach,-1]"
+		
 	}
 
 OnInitialize
@@ -17,23 +19,27 @@ OnInitialize
 	//if !ISVAR("NewVariable"); NewVariable = 0
 	//This means that it will only set the new variable if the user doesn't already have it, so that their variables don't get overwritten
 	stroke = 0
-	if reference0 != "reload" //For things you want to reset EXCEPT when just reloading; a convenience for you the dev, basically
-	{
-		LastTalk = ""
-	}
-	if nowshell = "master"; mode = 1
-	else; mode = 0
+	OnTrainerID
+	OnPokedex
+	OnCurryDex
+	LastTalk = ""
+	mode = 0
 }
 
 OnBoot : all
 {
-	"\![get,property,OnShellPath,currentghost.shelllist.current.path]"
-	OnPokeID
 	if Reference0 = "master"; mode = 1
 	else; mode = 0
 
 		"\0\s[0]Hello %(username).\w8 Good to see you."
 		"\0\s[0]Hello.\w8 Ready to make something cool?"
+	OnBootyARR
+	OnInitialize
+}
+
+OnBootyARR
+{
+	OnPokeID
 }
 
 OnClose
@@ -46,7 +52,6 @@ OnClose
 
 OnShellChanging : all
 {
-	"\![get,property,OnShellYEET,currentghost.shelllist.current.path]"
 	if reference0 == "master"
 	{
 		if mode == 1 
@@ -56,7 +61,7 @@ OnShellChanging : all
 		else //mode == 0; First
 		{
 			"\0\s[0]%(Pokemon) heads back to the Program Daycare."
-			mode == 1
+			mode = 1
 		}
 	}
 	else //other unspecified shells
@@ -77,14 +82,14 @@ OnShellChanging : all
 
 OnShellChanged : all
 {
-	"\![get,property,OnShellPath,currentghost.shelllist.current.path]"
-	
+
 	if mode == 1
 	{
 		"\0\s[1]\1\s[10] Professor Loaded!"
 	}
 	else 
 	{
+		if PBF = 0
 		"\0\s[0]\1\s[10] Pokemon summoned"
 	}
 }
@@ -102,15 +107,15 @@ OnShellChanged : all
 //	"\![get,property,OnShellLoad,currentghost.shelllist.current.path]"
 //	"\![get,property,OnShellYEET,currentghost.shelllist.current.path]"
 	
-OnShellLoad
-{
-  currentshellpath = reference0
-  _a = DICLOAD(currentshellpath + "/pokeID.dic") 
-}
+//OnShellLoad
+//{
+//  currentshellpath = reference0
+// _a = DICLOAD(currentshellpath + "/pokeID.dic") 
+//}
 
-OnShellYEET
-{
-  currentshellpath = reference0
-  _a = DICUNLOAD(currentshellpath + "/pokeID.dic") 
-}
+//OnShellYEET
+//{
+//  currentshellpath = reference0
+//  _a = DICUNLOAD(currentshellpath + "/pokeID.dic") 
+//}
 
