@@ -22,3 +22,4 @@ Okuajub - Coded both Shells and the Nuzlocke Tracker and prettymucheverythingels
 Beck - hobyloby is open want a smoothie?
 Rosenheim - aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ChatGPT - the rubber duck that talks back
+if you want links to things check out Poke!Partner's home page- PokePartner.carrd.co
