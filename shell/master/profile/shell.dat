@@ -5,14 +5,23 @@ Char1.balloon.isleft,1
 inputbox.left,768
 balloon0.offset,211.-133
 scriptbox.left,1145
-Char0.centery,824
+Char0.centery,765
 balloon1.offset,-117.297
+<<<<<<< Updated upstream
 Char0.balloon.isleft,1
 Char.VirtualDesktop,36b52b3b-5061-4c02-a27b-2c7f9274c806
 Char0.center,1070
 scriptbox.top,94
 Char1.centery,408
 Char1.center,1511
+=======
+Char0.balloon.isleft,0
+Char.VirtualDesktop,62811174-cdbe-4917-941e-475967d279a6
+Char0.center,281
+scriptbox.top,94
+Char1.centery,568
+Char1.center,1292
+>>>>>>> Stashed changes
 seriko.scaling.percent.x,75
 seriko.scaling.percent.y,75
 inputbox.top,412

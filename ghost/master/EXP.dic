@@ -50,10 +50,17 @@ OnAdventure
 {
     "You send your Pokemon on an adventure.\0\s[-1]\w[5000]"
     _adven = RAND(3)+1
+<<<<<<< Updated upstream
     --
 if _adven = 1
 {
     if friendship > 35
+=======
+//---------FORAGING ADVENTURE-------------------------------------------------------------------------------------------------------------------------------------------------------
+if _adven == 1
+{
+	if FriendVal > 35
+>>>>>>> Stashed changes
     {
         _berry1 = berryOne[RAND(ARRAYSIZE(berryOne))] + " Berry"
         _berry2 = berryTwo[RAND(ARRAYSIZE(berryTwo))] + " Berry"
@@ -82,8 +89,13 @@ if _adven = 1
         "Your %(Pokemon) seemed to find something while out, but it doesn't seem like sharing."
     }
 }
+<<<<<<< Updated upstream
 
 elseif _adven = 2
+=======
+//-------BATTLE ADVENTURE-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+elseif _adven == 2
+>>>>>>> Stashed changes
 {
     "%(Pokemon) won a battle on their adventure!"
     _plusEXP = RAND(50) + 1
@@ -113,11 +125,18 @@ elseif _adven = 2
         }
     }
 }
+<<<<<<< Updated upstream
 
 	
 elseif _adven = 3
 {
     if friendship > 140 && friendship < 220
+=======
+//----------------A THIEF-------------------------------------------------------------------------------------------------------------------------------------------------------------
+elseif _adven == 3
+{
+    if FriendVal > 140 && FriendVal < 220
+>>>>>>> Stashed changes
     {
         _₽₽ = RAND(301) + 100
         ₽ = ₽ + _₽₽
@@ -150,7 +169,12 @@ elseif _adven = 3
 //your pokemon came back with money... is that someones wallet?["peanut"]
 }
 
+<<<<<<< Updated upstream
 OnInventory : all
+=======
+
+OnInventory //inventory internal tracking. inventory display is in Kero Menu
+>>>>>>> Stashed changes
 {
 	"\1\s[10]Your bag is currently holding:"
 	"₽%(₽)\n\n[half]"
@@ -159,6 +183,7 @@ OnInventory : all
 	"Berry Inventory"
     "\n\n[half]"
 	"%(MyBerrys)\e"
+<<<<<<< Updated upstream
     /*
 	foreach berryInventory; _berry
     {
@@ -166,3 +191,8 @@ OnInventory : all
     }
 	*/
 }
+=======
+
+}
+
+>>>>>>> Stashed changes

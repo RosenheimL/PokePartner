@@ -8,69 +8,74 @@ OnKeroMenu : all
 	"Rotom Menu!\n\n" //Put a dialogue or two here if you want it.
  	--
 	"\1\s[10]\b[2]"
+<<<<<<< Updated upstream
 	"\![*]\q[My Items,Oninventory]\n"
 	"\![*]\q[PokeCenter,OnPokeCenter]\n"
 	"\![*]\q[PokeMart,OnPokeMart]\n"
 	"\![*]\q[Nuzlocke Training,OnNuzlockeMenu]\n\n[half]"
+=======
+	"\![*]\q[Scan your Pokemon,OnPokeInfo]\n" //Icon; Pokedex
+	"\![*]\q[Check your ID,OnTrainerIDisplay]\n" //Icon; TrainerID Display. This NEEDS to Lead to different Options Depending on Menu Mode.
+	"\![*]\q[Open Bag,OnInventory]\n" //Icon; Bag
+	"\![*]\q[Prepare Food,Select.MakeFood]\n" //Icon; picnic
+	"\![*]\q[Nuzlocke Training,OnNuzlockeMenu]\n" //Icon; notebook
+	"\![*]\q[Change current Poke!Partner,OnShellSwitchMenu]\n\n[half]" //Icon; PokeBall
+	//below are Menu Items That are normally part of the "contacts" menu and in the Text menu will be Condensed into the Contacts Sub-Menu
+	"\![*]\q[PokeCenter RHS,OnPokeCenter]\n"
+	"\![*]\q[PokeMart Delivery,OnPokeMart]\n"
+	"\![*]\q[Professor Azalea,OnCallHelp]\n"
+	//Bottom of Menu Icons. These are Always Icons on the Menu regardless of Mode, I mean it's common Knowledge a gear is for settings and an X cancels. fite me
+>>>>>>> Stashed changes
 	"\![*]\q[Update,keroupdatecheck]\n"
- 	"\![*]\q[Bug report,bugreport]\n\n"
-	//"\![*]\q[Test variable,testvariable]\n\n"
-	//When you are done with the test variable, aka your ghost is finished or you just don't want it showing up when you publish your ghost beta or whatevs, simply add two // slashes in front of \![*] to comment the line out. In Notepad++, it will turn green. When you want to use it again, erase the two slashes to turn it back to normal.
-	"\![*]\q[Nothing,keroCANCEL]\e"
+ 	"\![*]\q[Program Feedback,bugreport]\n\n"
+	"\![*]\q[Nothing,keroCANCEL]\x"
+	
+	//not implementing ICONs Until Next update probably, For Now this Menu Gets to be in limbo
 }
 
 //If you click cancel.
 Select.keroCANCEL
 {
-	"\1\s[10]This is menu cancel dialogue.\e"
+	"\e"
 }
 
 //This is when they select bug report. This is mostly meant to briefly give the user information about you, the creator, and how to report a problem to you. This can be handy if the person forgot where they got their ghost or how to contact you. Add whatever info you like here.
 Select.bugreport
 {
-"\1\s[10]This is the bug report dialogue. \w5Report bugs to youremailaddress@emailprovider.com. \w5We were downloaded from \_a[http://www.whereveryoupostedthem.com/]some place\_a.\e"
+"\1\s[10]Thank you for your Bug-Report and/or Feedback! \w5To contact the Poke!Partner Team please reach out to us at pokepartner@aol.com(PokePartner Team Email) or on the Ukagaka DreamTeam Discord to @Espionyage/espionyage#5484 \n\w5This Program is Distributed at \_a[https://github.com/RosenheimL/PokePartner] Github\_a. \w5If it were distributed somewhere else please inform The DevTeam of this immedietly.\e"
 }
 
 //When clicked, this will automatically tell the ghost to check for updates. More detail on updates in etc.dic.
 Select.keroupdatecheck
 {
-	"\1\s[10]\![updatebymyself]\e"
+	"\1\s[10]Checking for Updates\![updatebymyself]\e"
 }
 
-//--Test Variable --------------------------------------------------------
-//You can also use this to test functions as I mentioned above by adding \![raise,function] at the end of it, although you can do this with Script Input as well.
-
-//It is ALWAYS A GOOD IDEA to test your dialogue! If you won't check it with the test variable, at least test it with Script Input! It'll save you so much trouble!
-
-Select.testvariable
-{
-	"\1\s[10]Testing!\e"
-}
+//For Phone Calls. 
 
 OnPokeCenter
 {
-	"\1\s[10]The PokeCenter can heal your Pokemon if they're hurt! "
+	"\1\s[10]\i[0]Thank you for calling the PokeCenter Remote Healing Service. Please Hold your Rotom Phone Close to your Pokemon So We may Check it's Condition.\x"
 	--
-	if health == 100 //Replace '100' with whatever the max value is supposed to be.
+	if health == 100
 	{
-		"\w8\w8...but it looks like your Pokemon is in tip top shape!"
+		"\w4.\w4.\w4. Scan Complete, Your Pokemon is in already in TipTop Shape! Stay Safe and have a Great %(TimeState)!\n [~Click~]\n\n[half]\q[Return to Menu,OnKeroMenu]\n\![*]\q[Leave Menu,keroCANCEL]"
 	}
 	else
 	{
-		health = 100 //Replace '100' with whatever the max value is supposed to be.
-		"Your Pokemon has been healed! Thank you for using the PokeCenter services."
-		
+		"\w4.\w4.\w4. Scan Complete, Your Pokemon is a %(health)! Now Healing\w2.\w2.\w2.\x\cHealing Complete! Stay Safe and have a Great %(TimeState)!\n [~Click~]\n\n[half]\q[Return to Main Menu,OnKeroMenu]\n\![*]\q[Close Menu,keroCANCEL]"
+		health = 100 
 	}
 }
 
 OnPokeMart
 {
-	"Hi! Thank you for calling the Pokemart Delivery Service.\n"
-	"Unfortunately Our Delivery vehicle is broken right now, Call back later and We'll hopefully be able to help!\n\n[half]"
-	"ah, that's unforturnate. Would you like to call someone else?\n"
-	
+	"\1\s[10]\i[1]Hello! Thank you for calling the Pokemart Delivery Service, May I take your Order?\n\n[half]/
+	\![*]\q[Cafe Take-Out,Order.Food]\n\![*]\q[Grocery,Order.Grocery]\n\![*]\q[Medicine,Order.Meds]\n\![*]\q[Gifts,Order.gift]\n\n[half]/
+	\![*]\q[Nevermind(Return to Main Menu),OnKeroMenu]\n\![*]\q[Nevermind(Close Menu),keroCANCEL]"
 }
-
+//reminder to make Storefront Later
+//also reminder to deal with Bloody Tutorial \after AC beta 1 is out
 
 //to Rosenheim: if you touch this Okuajub has the right to personally take out to 52° 29' 19.674" N 112° 52' 43.101" W and shoot you with a real gun
 //I fucking mean it if you do anything below this line you Deserve the hell you recieve

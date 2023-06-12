@@ -3,6 +3,7 @@ __system_settings_version__,2
 balloon,C:\Users\Lucifen Kobylka\Documents\SSP fresh\balloon\BlackWhite2\
 scriptbox.left,1145
 shiori.debugnotify,1
+<<<<<<< Updated upstream
 Char.VirtualDesktop,36b52b3b-5061-4c02-a27b-2c7f9274c806
 Char0.center,1070
 scriptbox.top,94
@@ -10,5 +11,15 @@ shell,shell\master\
 FirstBoot,booted
 Char1.center,1511
 shell.ischanged.2,1
+=======
+Char.VirtualDesktop,62811174-cdbe-4917-941e-475967d279a6
+Char0.center,281
+scriptbox.top,163
+shell,shell\master\
+FirstBoot,booted
+Char1.center,1292
+shell.ischanged.2,1
+update.lastexec,738574002
+>>>>>>> Stashed changes
 DeveloperPalette.visible,1
 __system_written_flag_do_not_remove__,written

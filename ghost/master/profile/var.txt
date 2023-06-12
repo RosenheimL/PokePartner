@@ -2,5 +2,10 @@ Charset,UTF-8
 install,737077128
 surfacecount,8
 firstboot,737077405
+<<<<<<< Updated upstream
 commitmemorysize,1748039
 lastboot,737781044
+=======
+commitmemorysize,1753966
+lastboot,739683973
+>>>>>>> Stashed changes
