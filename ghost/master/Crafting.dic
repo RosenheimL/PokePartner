@@ -1,0 +1,48 @@
+Select.MakeFood : all //feed the fucker. Rosenheim Version
+{
+	OnCurryDex
+	if FirstFeed = 0
+	{
+	"\1\s[10]No Cookware found, calling resources .\w2.\w2.\w2.\c\i[3] Hi, you need some cookwear? Sorry but I actually lost our cooking pot!\nBut if you need I can Send over a Stuffed Poffin for your Poke Partner to eat!\n I will just you to give me some berries~"
+	"\q[Berries??,Select.ExplainWhere]"
+	}
+	else
+	{
+	"\1\s[10]\i[3] Hi! Need more Poffins? Okay! Do you have any Berries I can use for them?"
+	}
+	"\q[Sure do!,Select.Flavor]"
+	//ohgodohfuck
+	"\q[Nope all out,Select.Flavourless]"
+	//Select Filling
+}
+
+Select.Flavor : all
+{
+	pot = IARRAY
+	"\1\s[10]\i[3]You have %(pot) in the pot right now)\n\n[half]"
+  foreach BerryInv; a
+  {
+    "\q[add" + a + ",OnAddtoMix," + a + "], "
+  }
+  OnWhatFlavorIsThat
+}
+
+OnAddtoMix
+{
+	pot ,= reference0
+	if pot[5] != " "
+	{
+	"\1\s[10]\i[3]Alright! Looks like the pot is Full~ Let's get mixing!\n\q[Let's Cook!,OnWhatFlavorIsThat]\nq[Wait can I start over?,select.restartcooking]"
+	}
+	else
+	{
+	"\1\s[10]\i[3]%(pot)\n\n[half]You've added %reference0 to the pot, anything else?\n\q[Let's Cook!,OnWhatFlavorIsThat]\nq[Wait can I start over?,select.restartcooking]"
+	}
+}
+
+Select.Flavorless
+{
+	"Hey that's fair. Not everyone can afford a lot of berries!\n"
+	"Just tell me what kind of Filling you'd like then~\n\n[half]"
+	
+}

@@ -14,11 +14,13 @@ dic, mouse.dic
 dic, meta.dic
 dic, other.dic
 dic, sakura_menu.dic
-dic, word.dic
 dic, anchor.dic
 dic, PokeAi.dic
 dic, EXP.dic
 dic, pokedex.dic
+dic, nameteach.dic
+dic, Crafting.dic
+dic, nuz_menu.dic
 
 msglang,english
 

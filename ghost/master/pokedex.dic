@@ -25,7 +25,7 @@ OnCurryDex
 	// poffins and pokeblocks don't need arrays, they're unique. Maybe can have them be a simpler version but provide less happiness? yeah that works
 	diets = ("Pantrophic","Lithovore","Lactovore","Carnivore","Herbivore","Omnivore")
 	
-	flavors = ("Spicy", "Sour", "Dry", "Bitter", "Sweet", "Normal", "Strange")
+	flavors = ("Spicy", "Sour", "Dry", "Bitter", "Sweet") //"Normal", "Strange"
 	berrys = ("Cheri", "Chesto", "Pecha", "Rawst", "Aspear", "Leppa", "Oran", "Persim", "Lum", "Sitrus", "Figy", "Wiki", "Mago", "Aguav", "Iapapa", "Pomeg", "Kelpsy", "Qualot", "Hondew", "Grepa", "Tamato")
 	//this is berry by raretity
 	//this is for advenure pools.
@@ -54,21 +54,107 @@ OnCurryDex
 //wait no didn't I already go through this. I can just make flavor arrays that contain all relevant berries!
 //okay. do that then go get the array compare chatgpt wrote. it should works
 
-OnWhatFlavorIsThat //help me
+OnWhatFlavorIsThat 
 {
-pot = IARRAY
-
 //adding
 _SpicyPlus = ("cheri", "leppa", "oran", "persim", "lum", "figy", "pomeg", "qualot" ,"hondew", "tamato", "occa", "rindo", "chople", "shuca", "tanga", "charti", "liechi", "petaya", "apicot", "lansat", "starf", "enigma", "rowap", "kee", "maranga" )
 _SourPlus = ("aspear", "leppa", "oran", "persim", "sitrus", "iapapa", "wepear", "pinap", "kelpsy", "qualot", "grepa", "rabuta", "nomel", "durin", "belue", "wacan", "yache", "kebia", "payapa", "tanga", "colbur", "salac", "petaya", "apicot", "lansat", "starf", "jaboca", "rowap")
 _DryPlus = ("chesto", "oran", "persim", "lum", "sitrus", "wiki", "razz", "bluk", "kelpsy", "hondew", "grepa", "tamato", "cornn", "spelon", "pamtre", "passho", "yache", "kebia", "coba", "charti", "kasib", "babiri", "chilan", "liechi", "ganlon", "apicot", "lansat", "starf", "enigma", "micle")
 _BitterPlus = ("rawst", "leppa", "oran", "lum", "sitrus", "aguav", "nanab", "wepear", "pomeg", "kelpsy", "hondew", "magost", "rabuta", "watmel", "durin", "passho", "rindo", "chople", "coba", "haban", "colbur", "ganlon", "salac", "petaya", "lansat", "starf", "custap", "jaboca")
 _SweetPlus = ("pecha", "leppa", "persim", "lum", "sitrus", "mago", "bluk", "nanab", "pomeg", "qualot", "grepa", "cornn", "magost", "pamtre", "watmel", "occa", "wacan", "shuca", "payapa", "kasib", "haban", "chilan", "liechi", "ganlon", "salac", "lansat", "starf", "micle", "custap")
+_FullPlus =("lansat", "kee", "mago", "maranga", "petcha", "starf")
 //masking
 _SourMinus = ("charti", "cheri", "chople", "enigma", "figy", "hondew", "liechi", "lum", "occa", "pomeg", "shuca")
 _SweetMinus = ("coba", "colbur", "oran", "passho", "petaya", "rowap")
 _DryMinus = ("aguav", "custap", "haban", "leppa", "rawst", "rindo")
 _BitterMinus = ("apicot", "chesto", "chilan", "kasib", "micle", "persim", "qualot", "tamato", "tanga", "wiki", "yache")
 _SpicyMinus = ("aspear", "babiri", "ganlon", "grepa", "iapapa", "jaboca", "kebia", "kelpsy", "payapa", "roseli", "sitrus", "salac", "wacan")
+    
+    _sour = 0
+    _sweet = 0
+    _dry = 0
+    _bitter = 0
+    _spicy = 0
+    
+    foreach pot: value
+    {
+        // Compare the value with plus and minus arrays
+        
+        // Plus arrays
+        if ASEARCH(value, _SpicyPlus) != -1
+        {
+            _spicy += 1
+        }
+        if ASEARCH(value, _SourPlus) != -1
+        {
+            _sour += 1
+        }
+        if ASEARCH(value, _DryPlus) != -1
+        {
+            _dry += 1
+        }
+        if ASEARCH(value, _BitterPlus) != -1
+        {
+            _bitter += 1
+        }
+        if ASEARCH(value, _SweetPlus) != -1
+        {
+            _sweet += 1
+        }
+        
+        // Minus arrays
+        if ASEARCH(value, _SpicyMinus) != -1
+        {
+            _spicy -= 1
+        }
+        if ASEARCH(value, _SourMinus) != -1
+        {
+            _sour -= 1
+        }
+        if ASEARCH(value, _DryMinus) != -1
+        {
+            _dry -= 1
+        }
+        if ASEARCH(value, _BitterMinus) != -1
+        {
+            _bitter -= 1
+        }
+        if ASEARCH(value, _SweetMinus) != -1
+        {
+            _sweet -= 1
+        }
+		
+		// FullPlus
+		if ASEARCH(value, _FullPlus) != -1
+		{
+			_sweet += 1
+			_bitter += 1
+			_dry += 1
+			_sour += 1
+			_spicy += 1
+		}
+    }
 
+_flavorValues = (_Spicy, _sour, _dry, _bitter, _sweet)
+
+_maxFlavor = MAX(_flavorValues)
+_maxFlavorIndex = ASEARCH(_maxFlavor, _flavorValues)
+
+_output = ""
+
+if (_maxFlavorIndex != -1) {
+    _maxFlavorName = _flavors[_maxFlavorIndex]
+    
+    if (_maxFlavor > 4) {
+        _output = "Very " + _maxFlavorName
+    } else {
+        _output = _maxFlavorName
+    }
+} else {
+    _output = "Flavorless"
+}
+
+_output
+
+ERASEVAR("pot")
 }

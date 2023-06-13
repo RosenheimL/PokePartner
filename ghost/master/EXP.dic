@@ -48,30 +48,27 @@ if _matchFound
 
 OnAdventure
 {
-    "You send your Pokemon on an adventure.\0\s[-1]\w[5000]"
+   //---Emotional Changes---
+   if emotion = "bored"; emotion = "happy"
+   elseif emotion = "scared" && FriendVal > 140; "%(PokeName) seems to frightened to leave your side right now/e" //cancel adventure
+   elseif emotion = "scared"; "the %(Pokemon) seems hesitant but heads off on an adventure"
+   "You send your Pokemon on an adventure.\0\s[-1]\w[5000]\s[2]"
     _adven = RAND(3)+1
-<<<<<<< Updated upstream
-    --
-if _adven = 1
-{
-    if friendship > 35
-=======
 //---------FORAGING ADVENTURE-------------------------------------------------------------------------------------------------------------------------------------------------------
 if _adven == 1
 {
 	if FriendVal > 35
->>>>>>> Stashed changes
     {
         _berry1 = berryOne[RAND(ARRAYSIZE(berryOne))] + " Berry"
         _berry2 = berryTwo[RAND(ARRAYSIZE(berryTwo))] + " Berry"
         _berry3 = berryThree[RAND(ARRAYSIZE(berryThree))] + " Berry"
 
-        if friendship > 140 && friendship < 220
+        if FriendVal > 140 && FriendVal < 220
         {
             MyBerrys ,= (_berry1, _berry2)
             "%(PokeName) found a couple berries on its adventure! It hands you a %(_berry1) and a %(_berry2)"
         }
-        elseif friendship >= 220
+        elseif FriendVal >= 220
         {
             MyBerrys ,= (_berry1, _berry2, _berry3)
             "%(PokeName) came back with a handful of berries! It seemed to work very hard and found you; a %(_berry1), a %(_berry2), and a %(_berry3)!"
@@ -89,13 +86,8 @@ if _adven == 1
         "Your %(Pokemon) seemed to find something while out, but it doesn't seem like sharing."
     }
 }
-<<<<<<< Updated upstream
-
-elseif _adven = 2
-=======
 //-------BATTLE ADVENTURE-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 elseif _adven == 2
->>>>>>> Stashed changes
 {
     "%(Pokemon) won a battle on their adventure!"
     _plusEXP = RAND(50) + 1
@@ -125,24 +117,16 @@ elseif _adven == 2
         }
     }
 }
-<<<<<<< Updated upstream
-
-	
-elseif _adven = 3
-{
-    if friendship > 140 && friendship < 220
-=======
 //----------------A THIEF-------------------------------------------------------------------------------------------------------------------------------------------------------------
 elseif _adven == 3
 {
     if FriendVal > 140 && FriendVal < 220
->>>>>>> Stashed changes
     {
         _₽₽ = RAND(301) + 100
         ₽ = ₽ + _₽₽
         "%(PokeName) returns with some money! It gives you %(_₽₽)\e"
     }
-    elseif friendship >= 220
+    elseif FriendVal >= 220
     {
         _₽₽ = RAND(501) + 200
         ₽ = ₽ + _₽₽
@@ -153,7 +137,7 @@ elseif _adven == 3
             "%(PokeName) came back with... a wallet?\nYou return it to the owner who thanks you with %(_₽₽)\e"
         }
     }
-    elseif friendship < 36
+    elseif FriendVal < 36
     {
         _₽₽ = RAND(401) + 50
         ₽ = ₽ + _₽₽
@@ -166,33 +150,32 @@ elseif _adven == 3
         "Your %(Pokemon) brought back a bit of money. You get %(_₽₽)\e"
     }
 }
-//your pokemon came back with money... is that someones wallet?["peanut"]
+//your pokemon came back with money... is that someones wallet?["peanut"] .. use this for certain natures
 }
 
-<<<<<<< Updated upstream
-OnInventory : all
-=======
 
-OnInventory //inventory internal tracking. inventory display is in Kero Menu
->>>>>>> Stashed changes
+OnInventoryInit //This is the inventory Initialization function. Should I be putting these all in OnFirstBoot? eh probably. I like being organized like this though
 {
-	"\1\s[10]Your bag is currently holding:"
-	"₽%(₽)\n\n[half]"
-	"Soothe bells, %(Soothebells)\n"
-	"Poke Dolls, %(Pokedolls)\n"
-	"Berry Inventory"
-    "\n\n[half]"
-	"%(MyBerrys)\e"
-<<<<<<< Updated upstream
-    /*
-	foreach berryInventory; _berry
-    {
-        "%(_berry), "
-    }
-	*/
-}
-=======
+	//Friendship affecting Items
+	MedInv = 	IARRAY
+	MedInvQuan = IARRAY
+	
+	HeldInv = IARRAY
+	HeldInvQuan = IARRAY
+	
+	GiftInv = IARRAY
+	GiftInvQuan = IARRAY
+	
+	//hungy boi arrays Also For Crafting
+	BerryInv = IARRAY
+	BerryInvQuan = IARRAY
+	
+	SnackInv = IARRAY
+	SnackInvQuan = IARRAY
+	
+	//Moneyyyy
+	TreasureInv = IARRAY
+	TreasureInvQuan = IARRAY
 
 }
 
->>>>>>> Stashed changes

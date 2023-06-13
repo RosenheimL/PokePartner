@@ -1,0 +1,366 @@
+//to Rosenheim: if you touch this Okuajub has the right to personally take out to 52° 29' 19.674" N 112° 52' 43.101" W and shoot you with a real gun
+//I fucking mean it if you do anything below this line you Deserve the hell you recieve
+//^^^ this was noted By Rosenheim
+
+
+// nuzlocke[0] = "Game; Rules0#ClickRules;"
+// nuzEncounters, Routes, Perishes, and Extras are their own arrays delemited with
+// nuzlocke is a multidimensional array which holds a string delimited with ;. This is the "second layer". The variables the second layer holds are:
+// Game (a single string) and Rules*. Rules* is another array (third layer) with the delimiter #.
+// Game is held at index 0 of Nuzlocke, Rules* is held at index 1. 
+
+OnNuzlockeMenu : all
+{
+	"\1\_q\b2\t\*\![set,autoscroll,disable]"
+	//If there are no recorded Nuzlockes, ask user to create a new one.
+	if ARRAYSIZE(nuzlocke) == 0; "You don't currently have any Nuzlockes recorded. \n\n[half]\![*]\q[Create New,OnCreateNewNuzlocke]?\n\![*]\q[Exit,null]\![set,balloontimeout,-1]\e"
+
+	//Proceed to open the first page if the above condition isn't met.
+	"\![raise,OnNuzlockePage,0]"
+}
+
+OnNuzlockePage : all
+{
+	_page = reference0
+	if _page == ""; _page = 0
+	_currentNuzlocke = nuzlocke[_page]
+	passNuz = _page
+	
+	"\1\_q\b2\t\*\![set,autoscroll,disable]"
+	"Nuzlocke %(_page + 1) - %(_currentNuzlocke[0])\n"
+	"Rules--\n"
+
+	_rules = SPLIT(_currentNuzlocke[1],'#')
+	_rules[0] = IARRAY //Not a rule
+	_z = 0
+	foreach _rules; _rule
+	{
+		if _rule == "ClickRules"; "%(_rule)\n"
+		else; "\q[%(_z + 1). %(_rule),OnAddEntry,1,%(_z + 1)]\n"
+		_z++
+	}
+	
+	"---\n"
+	"Encounter - Route - Fainted? - Extra\n"
+
+	//Gathers the length of each array to find the longest one, to know how many rows to print.
+	_encounterLength = ARRAYSIZE(nuzEncounters[_page])
+	_routeLength = ARRAYSIZE(nuzRoutes[_page])
+	_perishLength = ARRAYSIZE(nuzPerishes[_page])
+	_extraLength = ARRAYSIZE(nuzExtras[_page])
+	_allLengths = (_encounterLength,_routeLength,_perishLength,_extraLength)
+	_longestNeighbor = 0
+
+	foreach _allLengths; _neighbor
+	{
+		if _neighbor > _longestNeighbor; _longestNeighbor = _neighbor
+	}
+
+	//Add a \q[entry,OnAddEntry,y,%(_i)] around each that sends the type of entry and what _i is (as that's the element's index in the array)
+	for _i = 0; _i < _longestNeighbor; _i++
+	{
+		if _i < _longestNeighbor - 1; "} \![*]\q[%(nuzEncounters[_page][_i]),OnAddEntry,2,%(_i)] - \q[%(nuzRoutes[_page][_i]),OnAddEntry,3,%(_i)] - \q[%(nuzPerishes[_page][_i]),OnAddEntry,4,%(_i)] - \q[%(nuzExtras[_page][_i]),OnAddEntry,5,%(_i)]\n"
+		else; "} \![*]%(nuzEncounters[_page][_i]) - %(nuzRoutes[_page][_i]) - \f[font,arial]%(nuzPerishes[_page][_i])\f[font,default] - %(nuzExtras[_page][_i])\n"
+		
+	}
+
+	//"} %(_currentNuzlocke[2][1,'#']) - %(_currentNuzlocke[3][1,'#']) - \f[font,arial]%(_currentNuzlocke[4][1,'#'])\f[font,default] - %(_currentNuzlocke[5][1,'#'])"	
+	
+	//Write the bottom line, which includes the page numbers, new option, and exit.
+	"\n\n[half]\![*]Page "
+	for _nuzNum = 0; _nuzNum < ARRAYSIZE(nuzlocke); _nuzNum++
+	{
+		"\q[%(_nuzNum + 1),OnNuzlockePage,%(_nuzNum)] "
+	}
+	"\n\n[half]\![*]\q[Create New,OnCreateNewNuzlocke] - \![*]\q[Delete Nuzlocke,OnDeleteNuz,%(_page)] - \![*]\q[Exit,OnNull]\![set,balloontimeout,-1]"
+}
+
+OnCreateNewNuzlocke
+{
+	"\1\t\*I'll go ahead and get that started for you! But first, what Pokemon game are you playing?\n\n[half]\![*]\q[Exit,OnNull]\![open,inputbox,OnFillNewNuzlocke,--timeout=10000,--text=Pokemon ]"
+}
+
+OnFillNewNuzlocke
+{
+	_game = reference0
+	//Initializes nuzlocke
+	if !ISVAR("nuzlocke"); nuzlocke = IARRAY
+	_latest = ARRAYSIZE(nuzlocke)
+	//Note that when assigning the %(_latest) number, it merely labels what position it was originally at, it does not update when other Nuzlockes are deleted. It's only there to make them more distinct when debugging.
+	//nuzlocke[*][0] is the game, nuzlocke[*][1] is the rules of the Nuzlocke.
+	nuzlocke ,= "%(_game),Rules%(_latest)#ClickRules"
+	//Arrays analagous to nuzlocke.
+	nuzEncounters ,= "ClickEncounter"
+	nuzRoutes ,= "ClickRoute"
+	nuzPerishes ,= "Clickperish"
+	nuzExtras ,= "ClickExtras"
+	"\1\b2Great! Thanks for filling that out. I'll pull it up for you now.\w[500]"
+	--
+	"\![raise,OnNuzlockePage,%(_latest)]"
+}
+
+OnDeleteNuz : all
+{
+	_entry = reference0
+	"\1\t\*Are you sure you want to delete Nuzlocke %(_entry + 1)?\n"
+	"\![*]\q[Yes,OnDeleteNuzConfirm,%(_entry)]\n"
+	"\![*]\q[No,OnNuzlockePage,%(_entry)]"
+}
+
+OnDeleteNuzConfirm
+{
+	_entry = reference0
+	nuzlocke[_entry] = IARRAY
+	nuzEncounters[_entry] = IARRAY
+	nuzRoutes[_entry] = IARRAY
+	nuzPerishes[_entry] = IARRAY
+	nuzExtras[_entry] = IARRAY
+	"\1Successfully deleted Nuzlocke %(_entry + 1)."
+}
+
+OnAddEntry
+{
+	// passNuz + reference0 should be Nuzlocke[x][y] where x is the Nuzlocke number the User was on when they selected to add an entry. Y is the type of entry, Y deep is delimited with #.
+	_entryX = passNuz // passNuz Nuzlocke[x]
+	_entryY = TOINT(reference0) // [y] is passed as a string by OnTranslate. Converted back to integer if necessary.
+	_entryZ = reference1 // What index an element was in an array, if applicable
+
+	if _entryY == 4; "\![raise,OnFillEntry,n/a,n/a,%(_entryX),%(_entryY),%(_entryZ)]"
+	else; "\1\t\*What would you like to enter?\n\n[half]\![*]\q[Exit,OnNull]\![open,inputbox,OnFillEntry,--timeout=0,--reference=%(_entryX),--reference=%(_entryY),--reference=%(_entryZ)]"
+	//if _entryY == 1; " You can add multiple rules at once by separating them with '#'." //I was considering letting people do this, but I don't want to complicate it further.
+}
+
+//Closes entryboxes when exiting Nuzlocke inputs. Not to be confused with 'null' raised in some \q options, which is just a dummy value to close the menu.
+OnNull
+{"\![close,inputbox,__SYSTEM_ALL_INPUT__]"}
+
+//An overly complicated function to handle filling every type of entry.
+OnFillEntry : all
+{
+	_entry = REPLACE(REPLACE(reference0,","," "),"#"," ") //What the user inputted, with invalid characters removed.
+	_entryX = reference2 //Current Nuzlocke
+	_entryY = reference3 //Entry type
+	_entryZ = reference4 //What index an element was in an array, if applicable
+	if _entry == ""; _entry = "N/A" //Failsafe if the user doesn't input anything, they can still replace it with something else
+
+	if _entryY == 1 //If it's a rule
+	{
+		
+		//FOR RULES (If you're reading this, I did it this way because this 'rules' portion was intended to be for all types, but it got.. messy.)
+		_rulesPosition = "nuzlocke[%(_entryX)]"+"[%(_entryY)]" //Defines the rules' position in the nuzlocke array.
+		_rulesArray = EVAL(_rulesPosition) //Evaluates _entryPosition, which should give us the original multidimensional array in the case this is a rule.
+		_rulesSplit = SPLIT(_rulesArray,'#') //Splits the rules array into a real array to work with.
+		_insert = ARRAYSIZE(_rulesSplit) - 2 //Gets how large that array is minus two (for the index), so we can insert _entry. This makes it so the rules show up in reverse chronological order.
+		if _entryZ != "" 
+		{
+			_insert = _entryZ 
+			_rulesSplit[_insert] = _entry
+			
+		} //Replaces old entry with new entry
+		else; _rulesSplit[_insert] ,= _entry //Inserts the user's new entry.
+		_rulesArrayNew = IARRAY
+		_i = ""
+		foreach _rulesSplit; _assemble //Puts the array back together.
+		{
+			if _i > 0; _rulesArrayNew += ('#' + _assemble) 
+			else; _rulesArrayNew += (_assemble) //If it's the first one, don't add a delimiter. (FUTURE OKUAJUB: I'm pretty sure this is bugged? But it's also functional, so.. It just doesn't do what I said it does.)
+			
+			_i++
+		}
+
+		_temp = nuzlocke[_entryX]
+		_temp[_entryY] = _rulesArrayNew
+		nuzlocke[_entryX] = _temp
+	}
+	else
+	{
+		if _entryY == 2 //If it's an encounter
+		{
+			_insert = ARRAYSIZE(nuzEncounters[_entryX]) - 2
+			_temp = nuzEncounters[_entryX] //Current Nuzlocke Encounters
+			if _entryZ != "" //If this is replacing an element in the array
+			{
+				if _entryZ == ARRAYSIZE(_temp) - 1; _temp[_entryZ] = "%(_entry),ClickEncounter"
+				else;_temp[_entryZ] = _entry
+				nuzEncounters[_entryX] = _temp
+			}
+			else
+			{
+				if _insert < 0 //if ClickEncounter is the only thing in the array
+				{
+					_temp = "%(_entry),ClickEncounter"
+					nuzEncounters[_entryX] = _temp
+				}
+				else
+				{
+					_temp[_insert] += ",%(_entry)"
+					nuzEncounters[_entryX] = _temp
+				}
+			}
+
+		}
+		elseif _entryY == 3 //If it's a route
+		{
+			_insert = ARRAYSIZE(nuzRoutes[_entryX]) - 2
+			_temp = nuzRoutes[_entryX]
+			if _entryZ != "" //If this is replacing an element in the array
+			{
+				if _entryZ == ARRAYSIZE(_temp) - 1; _temp[_entryZ] = "%(_entry),ClickRoute"
+				else;_temp[_entryZ] = _entry
+				nuzRoutes[_entryX] = _temp
+			}
+			else
+			{
+				if _insert < 0
+				{
+					_temp = "%(_entry),ClickRoute"
+					nuzRoutes[_entryX] = _temp
+				}
+				else
+				{
+					_temp[_insert] += ",%(_entry)"
+					nuzRoutes[_entryX] = _temp
+				}
+			}
+		}
+		elseif _entryY == 4 //If it's a perish
+		{
+			_insert = ARRAYSIZE(nuzPerishes[_entryX]) - 2
+			_temp = nuzPerishes[_entryX]
+			if _entryZ != "" //If this is replacing an element in the array
+			{
+				if _temp[_entryZ] == "☑"
+				{
+					_temp[_entryZ] = "☐"
+					nuzPerishes[_entryX] = _temp
+				}
+				elseif _temp[_entryZ] == "☐"
+				{
+					_temp[_entryZ] = "☑"
+					nuzPerishes[_entryX] = _temp
+				}
+			}
+			else
+			{
+				if _insert < 0
+				{
+					_temp = "☑,Clickperish"
+					nuzPerishes[_entryX] = _temp
+				}
+				else
+				{
+					_temp[_insert] += ",☑"
+					nuzPerishes[_entryX] = _temp
+				}
+			}
+			
+		}
+		elseif _entryY == 5 //If it's an extra
+		{
+			_insert = ARRAYSIZE(nuzExtras[_entryX]) - 2
+			_temp = nuzExtras[_entryX]
+			if _entryZ != "" //If this is replacing an element in the array
+			{
+				if _entryZ == ARRAYSIZE(_temp) - 1; _temp[_entryZ] = "%(_entry),ClickExtra"
+				else;_temp[_entryZ] = _entry
+				nuzExtras[_entryX] = _temp
+			}
+			else
+			{
+				if _insert < 0
+				{
+					_temp = "%(_entry),ClickExtra"
+					nuzExtras[_entryX] = _temp
+				}
+				else
+				{
+					_temp[_insert] += ",%(_entry)"
+					nuzExtras[_entryX] = _temp
+				}
+			}
+			
+		}
+	}
+
+	if _entryZ == ""
+	{
+		_encounterLength = ARRAYSIZE(nuzEncounters[_entryX])
+		_routeLength = ARRAYSIZE(nuzRoutes[_entryX])
+		_perishLength = ARRAYSIZE(nuzPerishes[_entryX])
+		_extraLength = ARRAYSIZE(nuzExtras[_entryX])
+
+		_allLengths = (_encounterLength,_routeLength,_perishLength,_extraLength)
+
+		_longestNeighbor = 0
+
+		foreach _allLengths; _neighbor
+		{
+			if _neighbor > _longestNeighbor; _longestNeighbor = _neighbor
+		}
+
+		// I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. 
+		// And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain.
+		//Hey Okuajub. I appreciate this so much but also WTF am I looking at
+		for _i = _encounterLength; _i < _longestNeighbor; _i++
+		{
+			_insert = ARRAYSIZE(nuzEncounters[_entryX]) - 2
+			_temp = nuzEncounters[_entryX]
+			if _insert < 0
+			{
+				_temp = "Add Encounter!,ClickEncounter"
+				nuzEncounters[_entryX] = _temp
+			}
+			else
+			{
+				_temp[_insert] += ",Add Encounter!"
+				nuzEncounters[_entryX] = _temp
+			}
+		}
+		for _i = _routeLength; _i < _longestNeighbor; _i++
+		{
+			_insert = ARRAYSIZE(nuzRoutes[_entryX]) - 2
+			_temp = nuzRoutes[_entryX]
+			if _insert < 0
+			{
+				_temp = "Route!,ClickRoute"
+				nuzRoutes[_entryX] = _temp
+			}
+			else
+			{
+				_temp[_insert] += ",Route!"
+				nuzRoutes[_entryX] = _temp
+			}
+		}
+		for _i = _perishLength; _i < _longestNeighbor; _i++
+		{
+			_insert = ARRAYSIZE(nuzPerishes[_entryX]) - 2
+			_temp = nuzPerishes[_entryX]
+			if _insert < 0
+			{
+				_temp = "☐,Clickperish"
+				nuzPerishes[_entryX] = _temp
+			}
+			else
+			{
+				_temp[_insert] += ",☐"
+				nuzPerishes[_entryX] = _temp
+			}
+		}
+		for _i = _extraLength; _i < _longestNeighbor; _i++
+		{
+			_insert = ARRAYSIZE(nuzExtras[_entryX]) - 2
+			_temp = nuzExtras[_entryX]
+			if _insert < 0
+			{
+				_temp = "Extra!,ClickExtras"
+				nuzExtras[_entryX] = _temp
+			}
+			else
+			{
+				_temp[_insert] += ",Extra"
+				nuzExtras[_entryX] = _temp
+			}
+		}
+	}
+	"\1\![raise,OnNuzlockePage,%(_entryX)]"
+}

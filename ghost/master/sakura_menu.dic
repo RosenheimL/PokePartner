@@ -18,9 +18,11 @@ OnSakuraMenu : all
 		{
 		"\![*]\q[Repeat Last Dialogue,OnLastTalk]\n\n[half]"
 		}
-		"\![*]\q[Say something,OnAiTalk]\n"//This option will force the ghost to say something from aitalk if the user clicks it.
-		"\![*]\q[Config Menu,OnTalkRateMenu]\n"
-		"\![*]\q[Functions,dosomething]\n\n[half]"
+		"\![*]\q[Say something,OnAiTalk]\n"
+		"\![*]\q[Call a Pokemon,OnShellMenu]\n"
+		"\![*]\q[Pokemon Care Questions,OnPokeCare]\n"
+		"\![*]\q[Config Menu,OnTalkRateMenu]\n\n[half]"
+		
 		"\![*]\q[Nevermind,CANCEL]"
 	}
 	else //If not Azaela 
@@ -31,12 +33,43 @@ OnSakuraMenu : all
 		"\![*]\q[Repeat Last Dialogue,OnLastTalk]\n\n[half]"
 		}
 		"\![*]\q[Say something,OnAiTalk]\n\n[half]"//This option will force the ghost to say something from aitalk if the user clicks it.
-		"\![*]\q[Make some Food,Select.MakeFood]\n"
+		"\![*]\q[Change Pokemon,OnShellMenu]\n"
 		"\![*]\q[Check Status,OnPokeStatus]\n"
 		"\![*]\q[Send on Advenure,OnAdventure]\n"
 		"\![*]\q[Config Menu,OnTalkRateMenu]\n"
 		"\![*]\q[Nevermind,CANCEL]\e"
 	}
+}
+
+On_installedshellname
+{
+	ShellList = IARRAY
+	foreach reference; _shell
+	{
+		ShellList ,= _shell
+	}
+}
+
+OnShellMenu
+{
+	_display = ""
+	for _i = 0; _i < ARRAYSIZE(ShellList); _i++
+	{
+		if ShellList[_i] == nowshell; _display += "\![*]"
+		_display += "\q[%(ShellList[_i]),OnSwitchShell,%(ShellList[_i])]\n"
+	}
+	--
+	"\0\*\_q"
+	--
+	if ARRAYSIZE(ShellList) > 16; "%(bb)\n\n[half]\![*]\q[Back to menu,OnSakuraMenu]"
+	elseif ARRAYSIZE(ShellList) > 11; "%(bb)"
+	else; "\b2"
+	--
+	"\![set,autoscroll,0]\_l[104]---Shells---"
+	--
+	//"\n\n[half]\![*]\q[Download more shells,OnShellUrl]\n\![*]\q[Make your own shell,OnCustomShell]"
+	--
+	"\n\n[half]%(_display)\n\n[half]\![*]\q[Back to menu,OnSakuraMenu]\n\![*]\q[Nevermind,Cancel]\e"
 }
 
 OnFeedPoke.start : all
@@ -87,67 +120,4 @@ OnTalkRateMenu : all
 OnTalkRateChange
 {
 	aitalkinterval = TOINT(reference0)
-}
-
-
-
-Select.MakeFood : all //feed the fucker. Rosenheim Version
-{
-	OnCurryDex
-	if FirstFeed = 0
-	{
-	"\1\s[10]No Cookware found, calling resources .\w2.\w2.\w2.\c\i[3] Hi, you need some cookwear? Sorry but I actually lost our cooking pot!\nBut if you need I can Send over a Stuffed Poffin for your Poke Partner to eat!\n I will just you to give me some berries~"
-	"\q[Berries??,Select.ExplainWhere]"
-	}
-	else
-	{
-	"\1\s[10]\i[3] Hi! Need more Poffins? Okay! Do you have any Berries I can use for them?"
-	}
-	"\q[Sure do!,Select.Flavor]"
-	//ohgodohfuck
-	"\q[Nope all out,Select.Flavourless]"
-	//Select Filling
-}
-
-Select.Flavor
-{
-	"\1\s[10]\i[3]Wonderful! In that case How about you tell me What Berries you'd like to use! You can give me up to 5 berries before my bowl is full. Make sure you put a comma between each entry!"
-	"\0\s[5]%(MyBerrys)\n"
-	
-}
-
-IsValidBerry
-{
-	//help
-_pot = IARRAY
-_matches = 0
-_matchFound = true
-
-foreach _pot; value
-{
-    _index = ASEARCH(value, MyBerrys)
-    if _index == -1
-    {
-        _matchFound = false
-        break
-    }
-}
-
-if _matchFound
-{
-    foreach _pot; value
-    {
-        _index = ASEARCH(value, MyBerrys)
-        MyBerrys[_index] = ""  // Remove the matched value from array1
-    }
-    _matches = ARRAYSIZE(_pot)  // Set _matches to the number of elements in array2
-} 
-OnWhatFlavorIsThat
-}
-
-Select.Flavorless
-{
-	"Hey that's fair. Not everyone can afford a lot of berries!\n"
-	"Just tell me what kind of Filling you'd like then~\n\n[half]"
-	
 }
